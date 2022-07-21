@@ -1,0 +1,29 @@
+﻿@model Blog
+
+<partial name="_Notification" />
+<form method="post" asp-action="DeleteBlog">
+    <div class="row">
+        <input asp-for="Id" hidden/>
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="card col-6">
+                <div class="card-body">
+                    <div class="flex-grow ">
+                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                            <h6 class="preview-subject">@Html.DisplayFor(Model => Model.BTitle) </h6>
+                        </div>
+                        <div class="text-muted">
+                            <p class="list-unstyled">@Html.Raw(Model.BContent.Substring(0, Math.Min(Model.BContent.Length, 350)))...</p>
+                        </div>
+
+                    </div>
+                   <button class="btn btn-inverse-danger btn-fw" type="submit" name="submit" value="@Model.BStatus"><i class="bi bi-trash3-fill"></i> Delete</button>&nbsp;
+                    <a href="##" onClick="history.go(-1); return false;" class="btn btn-inverse-secondary btn-fw" ><i class="bi bi-arrow-90deg-left"></i> Back</a> 
+                </div>
+            </div>
+
+        </div>
+    </div>
+</form>
+
+
+

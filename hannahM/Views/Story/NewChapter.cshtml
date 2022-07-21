@@ -1,0 +1,34 @@
+﻿@model Chapters
+
+<partial name="_Notification" />
+@using (Html.BeginForm("NewChapter", "Story", FormMethod.Post))
+{
+    <input name="story_id" asp-for="story_id" type="text" hidden />
+    <div class="row">
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="col-8 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"> <i class="mdi mdi-lead-pencil"></i></span>
+                                    <input name="Title" type="text" class="form-control text-white col-md-6" value="Untitled part" onclick="this.select()">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-inverse-success btn-fw pullright" type="submit"><i class="bi bi-card-text"></i> Save</button>
+                            </div>
+                        </div>
+                        <div class="">
+                            <textarea name="Content" class="ckeditor"></textarea>
+                            <script>
+                                CKEDITOR.replace('editor1');
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

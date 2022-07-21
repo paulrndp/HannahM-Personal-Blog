@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Blog>
+@using System.Web;
+@using System.Text.RegularExpressions;
+
+@{
+
+    Layout = "~/Views/Shared/_Main.cshtml";
+
+}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-6">
+            @foreach (var item in Model)
+            {
+                <div class="card" style="text-align:center;border:none;">
+                    <div class="card-body">
+                        <h6 class="short">Blog</h6>
+                        <h5 class="card-title" style="text-align:center;">@item.BTitle</h5>
+                        <pre class="card-text text-muted" style="text-align:center;">Posted on @item.BCreatedDateTime.ToString("MMMM dd, yyyy") </pre>
+                        <div><p class="text-muted" style="text-align: center;">@HttpUtility.HtmlDecode(Regex.Replace(item.BContent.Substring(0, Math.Min(item.BContent.Length, 250)), @"<[^>]+>", ""))... </p></div>
+                        <a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font">Read More</a>
+                    </div>
+                </div>
+            }
+
+        </div>
+        <div class="col-lg-5">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Comments</h5>
+@*                     <div class="fb-comments" data-href="https://localhost:44325" data-width="" data-numposts="10"></div>                    
+*@                </div>
+            </div>
+        </div>
+    </div>
+</div>

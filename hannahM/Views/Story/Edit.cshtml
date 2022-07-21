@@ -1,0 +1,67 @@
+﻿@model Chapters
+
+<style>
+    .pullright {
+        float: right;
+        margin: 2px;
+    }
+</style>
+<partial name="_Notification" />
+
+@using (Html.BeginForm("Edit", "Story", FormMethod.Post))
+{
+  <input asp-for="story_id" type="text" name="sID">
+
+    <div class="row">
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="col-8">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-10">
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text" id="basic-addon1"> <i class="mdi mdi-lead-pencil"></i></span>
+                                    <input asp-for="Title" type="text" class="form-control text-white col-md-6" aria-describedby="basic-addon1" >
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button class="btn btn-warning btn-fw pullright" type="submit"><i class="bi bi-check-circle"></i>Update</button>
+                            </div>
+                        </div>
+
+                        <div class="">
+                            <textarea class="ckeditor" asp-for="Content"></textarea>
+                            <script>
+                                CKEDITOR.replace('editor1', {
+                                    height: 400
+                                });
+                            </script>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+@*<form method="post">
+    <div class="row">
+        <div class="d-flex align-items-center justify-content-center">
+            <div class="col-8 mb-3">
+                <div class="card">
+                    <div class="card-body">
+
+                        <div class="">
+                            <textarea name="editor1" class="ckeditor"></textarea>
+                            <script>
+                                CKEDITOR.replace('editor1', {
+                                    height: 400
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>*@

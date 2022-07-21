@@ -1,0 +1,78 @@
+﻿@model IEnumerable<Contents>
+@using System.Web;
+@using System.Text.RegularExpressions;
+
+@{
+
+    Layout = "~/Views/Shared/_Main.cshtml";
+
+}
+<link rel="stylesheet" href="~/main/css/postcards.css">
+
+<body>
+    <form>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 mb-5">
+                    @foreach (var item in Model.Take(1))
+                    {
+                        <div class="blog-post shadow-lg">
+                            <div class="blog-post_img">
+                                <img src="data:image/jpg;base64,@Convert.ToBase64String(item.stories.Cover)" alt="">
+                            </div>
+                            <div class="blog-post_info">
+                                <h1 class="blog-post_title">@item.stories.Title</h1>
+                                <div class="row">
+                                    <div class="col-2"><i class="bi bi-eye"> 1,856</i></div>
+                                    <div class="col-2"><i class="bi bi-list-ul"> 25</i></div>
+                                </div>
+                                <p class="blog-post_text">
+                                    @Html.Raw(item.stories.Desc)
+                                </p>
+
+                            </div>
+                        </div>
+                    }
+
+                </div>
+                <div class="col-lg-8">
+                    <h4 class="underline">Table of Contents</h4>
+                    <div class="card mb-3">
+                        <div class="card-header">
+                        </div>
+                        <ul class="list-group">
+                            @foreach (var item in Model)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <a asp-controller="Main" asp-action="Read" asp-route-id="@item.chapters.Id" asp-route-slug="@item.stories.Slug" class="hover-underline-animation default-font"> @item.chapters.Title</a>
+                                    <span class=""><i class="bi bi-eye"> 1,856</i></span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <h6 class="underline">Recently Posts</h6>
+                    @foreach (var item in ViewBag.blg)
+                    {
+                        <div class="card-transparent">
+                            <div class="card-body">
+                                <h6 class="card-title"><a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" >@item.BTitle</a></h6>
+                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.BContent.Substring(0, Math.Min(item.BContent.Length, 50)), @"<[^>]+>", ""))...</p>
+                            </div>
+                        </div>
+                    }
+                    @foreach (var item in ViewBag.rndm)
+                    {
+                        <div class="card-transparent">
+                            <div class="card-body">
+                                <h6 class="card-title"><a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.RTitle</a></h6>
+                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.RContent.Substring(0, Math.Min(item.RContent.Length, 50)), @"<[^>]+>", ""))...</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </form>
+</body>

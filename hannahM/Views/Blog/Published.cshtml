@@ -1,0 +1,26 @@
+﻿@model IEnumerable<Blog>
+
+<partial name="_Notification" />
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-lg-4 mb-3 stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="flex-grow ">
+                        <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                            <h6 class="preview-subject float-right">@Html.DisplayFor(x => item.BTitle) </h6>
+                            <p class="text-small"> @Html.DisplayFor(x => item.BViews) 123</p>
+                        </div>
+                        <p class="text-small text-warning">@Html.DisplayFor(x => item.BCreatedDateTime)</p>
+                        <div class="text-muted">
+                            <p class="list-unstyled">@Html.Raw(item.BContent.Substring(0, Math.Min(item.BContent.Length, 350)))...</p>
+                        </div>
+                    </div>
+
+                </div>
+                <a asp-controller="Blog" asp-action="Edit" asp-route-id="@item.Id" class="stretched-link"></a>
+            </div>
+        </div>
+    }
+</div>

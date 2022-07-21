@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Chapters>
+@using Microsoft.AspNetCore.Http.Extensions; 
+@using Microsoft.AspNetCore.Mvc;
+@using System.Web;
+
+@{
+
+    Layout = "~/Views/Shared/_Main.cshtml";
+
+}
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="card" style="text-align:center;border:none;">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card-body">
+                            <h6 class="short">@ViewBag.title</h6>
+                            <h5 class="card-title" style="text-align:center;">@item.Title</h5>
+                            <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
+                            <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
+                        </div>                        
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Comments</h5>
+                        <div id="vcomment"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+

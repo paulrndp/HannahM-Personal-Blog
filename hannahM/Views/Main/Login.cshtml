@@ -1,0 +1,77 @@
+﻿@model Account
+@{
+
+    Layout = "~/Views/Shared/_Main.cshtml";
+
+}
+<body>
+    @using (Html.BeginForm("Login", "Main", FormMethod.Post))
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card border-0 shadow rounded-3">
+                        <div class="card-body p-4 p-sm-5">
+                            <h5 class="card-title text-center mb-5 fw-light fs-5">Sign In</h5>
+
+
+                            <div class="form-floating mb-3">
+                                <input type="text" class="form-control" name="Username">
+                                <label for="floatingInput">Username</label>
+                                <span asp-validation-for="Username" class="text-danger default-font"></span>
+                            </div>      
+
+                            <div class="form-floating mb-3">
+                                <input type="password" class="form-control" name="Password">
+                                <label for="floatingPassword">Password</label>
+                                <span asp-validation-for="Password" class="text-danger default-font"></span>
+                            </div>
+                          
+
+                            <div class="d-grid">
+                                <button class="btn btn-primary btn-login text-uppercase fw-bold" type="submit">
+                                    Sign in
+                                </button>
+                            </div>
+                            <hr class="my-4">
+                           @* <div class="text-danger default-font"><b><i class="bi bi-exclamation-square-fill " hidden></i> @ViewBag.Error</b></div>*@
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                </div>
+            </div>
+        </div>
+    }
+    @* <h4>Status :  @ViewBag.Name</h4>
+
+    @using (Html.BeginForm())
+    {
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+    <hr />
+
+    <div class="form-group">
+    @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+    @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    </div>
+
+    <div class="form-group">
+    @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+    <div class="col-md-10">
+    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+    </div>
+    </div>
+
+    <div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+    <input type="submit" value="Login" class="btn btn-default" />
+    </div>
+    </div>
+    </div>
+    }*@
+</body>

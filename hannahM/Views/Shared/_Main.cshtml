@@ -1,0 +1,95 @@
+﻿@using System.Web;
+@using System.Text.RegularExpressions;
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Hannah Montemayor 2022</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <!-- Google fonts - Montserrat for headings, Cardo for copy-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cardo:ital,wght@0,400;0,700;1,400&amp;family=Montserrat:wght@400;700&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <!-- Lightbox-->
+    <link rel="stylesheet" href="~/main/vendor/glightbox/css/glightbox.min.css">
+    <!-- Leaflet-->
+    <link rel="stylesheet" href="~/main/vendor/leaflet/leaflet.css">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="~/main/css/style.default.css" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="~/main/css/custom.css">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="~/main/img/favicon.png">
+</head>
+@*<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v14.0&appId=1352389571951443&autoLogAppEvents=1" nonce="TjL73XPr"></script>
+*@
+<body class="scrollspy-example" data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="0" tabindex="0">
+    <!-- intro end-->
+    <nav class=" navbar navbar-expand-lg navbar-light border-gray-200 bg-white py-lg-0 mb-5" id="navbar">
+        <div class="container">
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse " id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link py-lg-3" href="~/Main/Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link py-lg-3" href="~/Main/Blog">Blog </a></li>
+
+                    <li class="nav-item"><a class="nav-link py-lg-3" href="#"><img id="logo-navbar-middle d-none" src="~/main/img/logo-m.png" width="200" alt="Logo Thing main logo"></a></li>
+                    <li class="nav-item"><a class="nav-link py-lg-3" href="~/Main/Story">Stories</a></li>
+                    <li class="nav-item"><a class="nav-link py-lg-3" href="~/Main/Random">Random Thoughts</a></li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        @RenderBody()
+    </div>
+    <footer class="py-5">
+        <div class="container py-4">
+            <div class="row copyright gy-2">
+                <div class="col-md-6">
+                    <p class="fst-italic mb-0 text-center text-md-start">&copy; 2022 <a asp-controller="Main" asp-action="Login">Hannah Montemayor</a></p>
+                </div>
+                <div class="col-md-6">
+                    <p class="fst-italic mb-0 text-center text-md-end">Template by <a class='text-reset' href="https://bootstrapious.com/p/how-to-build-a-working-bootstrap-contact-form">Bootstrapious</a></p>
+                    <!-- Please do not remove the backlink to us. It is part of the licence conditions. Thanks for understanding :)-->
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
+<!-- JavaScript files-->
+<script src="~/main/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="~/main/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="~/main/vendor/leaflet/leaflet.js"></script>
+<script src="~/main/js/leaflet.js"></script>
+<script src="~/main/js/theme.js"></script>
+<!-- FontAwesome CSS - loading as last, so it doesn't block rendering-->
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<script>
+
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId: '1352389571951443',
+            xfbml: true,
+            version: 'v14.0'
+        });
+        FB.AppEvents.logPageView();
+    };
+
+    (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js";
+        fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+
+</script>
