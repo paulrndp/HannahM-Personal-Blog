@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
-    [SessionExpire]
+    //[SessionExpire]
     public class RandomController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -24,10 +24,10 @@ namespace hannahM.Controllers
             var status = _db.Random.Where(x => x.RStatus == "published").Select(stats => stats).ToList();
             return View("RPublished", status);
         }        
-        public IActionResult RDraft()
+        public IActionResult Posts()
         {
             var status = _db.Random.Where(x => x.RStatus == "draft").Select(stats => stats).ToList();
-            return View("RDraft", status);
+            return View("Posts", status);
         }
         public IActionResult Edit(int? id)
         {

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
-    [SessionExpire]
+    //[SessionExpire]
     public class BlogController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -27,10 +27,10 @@ namespace hannahM.Controllers
             return View();
         }
 
-        public IActionResult Draft()
+        public IActionResult Posts()
         {
             var status = _db.Blog.Where(x => x.BStatus == "draft").Select(stats => stats).ToList();
-            return View("Draft", status);
+            return View("Posts", status);
         }
 
         public IActionResult Edit(int? id)

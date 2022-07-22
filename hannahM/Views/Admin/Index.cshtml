@@ -1,0 +1,190 @@
+﻿@*<div class="row">
+    <div class="col-sm-4 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h5>Blog</h5>
+                <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                            <h2 class="mb-0">@ViewBag.B</h2>
+
+                        </div>
+                        <h6 class="text-muted font-weight-normal">total of published blog</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                        <i class="icon-lg mdi mdi-lead-pencil text-primary ms-auto"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h5>Stories</h5>
+                <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                            <h2 class="mb-0">@ViewBag.S</h2>
+
+                        </div>
+                        <h6 class="text-muted font-weight-normal"> total of stories created</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                        <i class="icon-lg mdi mdi-book-open-variant text-danger ms-auto"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h5>Random Thoughts</h5>
+                <div class="row">
+                    <div class="col-8 col-sm-12 col-xl-8 my-auto">
+                        <div class="d-flex d-sm-block d-md-flex align-items-center">
+                            <h2 class="mb-0">@ViewBag.R</h2>
+
+                        </div>
+                        <h6 class="text-muted font-weight-normal">total of published random thoughts</h6>
+                    </div>
+                    <div class="col-4 col-sm-12 col-xl-4 text-center text-xl-right">
+                        <i class="icon-lg mdi mdi-cards-variant text-success ms-auto"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex flex-row justify-content-between">
+                    <h4 class="card-title">All Comments</h4>
+
+                </div>
+                <div class="preview-list">
+                    <div class="preview-item border-bottom">
+                        <div class="preview-thumbnail">
+                            <img src="~/images/faces/face6.jpg" alt="image" class="rounded-circle" />
+                        </div>
+                        <div class="preview-item-content d-flex flex-grow">
+                            <div class="flex-grow">
+                                <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                    <h6 class="preview-subject">Leonard</h6>
+                                    <p class="text-muted text-small">5 minutes ago</p>
+                                </div>
+                                <p class="text-muted">Well, it seems to be working now.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-item border-bottom">
+                        <div class="preview-thumbnail">
+                            <img src="~/images/faces/face8.jpg" alt="image" class="rounded-circle" />
+                        </div>
+                        <div class="preview-item-content d-flex flex-grow">
+                            <div class="flex-grow">
+                                <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                    <h6 class="preview-subject">Luella Mills</h6>
+                                    <p class="text-muted text-small">10 Minutes Ago</p>
+                                </div>
+                                <p class="text-muted">Well, it seems to be working now.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-item border-bottom">
+                        <div class="preview-thumbnail">
+                            <img src="~/images/faces/face9.jpg" alt="image" class="rounded-circle" />
+                        </div>
+                        <div class="preview-item-content d-flex flex-grow">
+                            <div class="flex-grow">
+                                <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                    <h6 class="preview-subject">Ethel Kelly</h6>
+                                    <p class="text-muted text-small">2 Hours Ago</p>
+                                </div>
+                                <p class="text-muted">Please review the tickets</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="preview-item border-bottom">
+                        <div class="preview-thumbnail">
+                            <img src="~/images/faces/face11.jpg" alt="image" class="rounded-circle" />
+                        </div>
+                        <div class="preview-item-content d-flex flex-grow">
+                            <div class="flex-grow">
+                                <div class="d-flex d-md-block d-xl-flex justify-content-between">
+                                    <h6 class="preview-subject">Herman May</h6>
+                                    <p class="text-muted text-small">4 Hours Ago</p>
+                                </div>
+                                <p class="text-muted">Thanks a lot. It was easy to fix it .</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+*@
+<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">Dashboard</span>
+        <h3 class="page-title">Overview</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <span class="stats-small__label text-uppercase">total of published blog</span>
+                        <h6 class="stats-small__value count my-3">@ViewBag.B</h6>
+                    </div>
+                    @*<div class="stats-small__data">
+                    <span class="stats-small__percentage stats-small__percentage--increase">4.7%</span>
+                    </div>*@
+                </div>
+                <canvas height="120" class="blog-overview-stats-small-1"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-6 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <span class="stats-small__label text-uppercase">total of stories created</span>
+                        <h6 class="stats-small__value count my-3">@ViewBag.S</h6>
+                    </div>
+                    @*<div class="stats-small__data">
+                    <span class="stats-small__percentage stats-small__percentage--increase">12.4%</span>
+                    </div>*@
+                </div>
+                <canvas height="120" class="blog-overview-stats-small-2"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg col-md-4 col-sm-6 mb-4">
+        <div class="stats-small stats-small--1 card card-small">
+            <div class="card-body p-0 d-flex">
+                <div class="d-flex flex-column m-auto">
+                    <div class="stats-small__data text-center">
+                        <span class="stats-small__label text-uppercase">total of published random thoughts</span>
+                        <h6 class="stats-small__value count my-3">@ViewBag.R</h6>
+                    </div>
+                    @*<div class="stats-small__data">
+                    <span class="stats-small__percentage stats-small__percentage--decrease">3.8%</span>
+                    </div>*@
+                </div>
+                <canvas height="120" class="blog-overview-stats-small-3"></canvas>
+            </div>
+        </div>
+    </div>
+
+
+</div>
