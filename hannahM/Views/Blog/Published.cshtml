@@ -9,12 +9,12 @@
                 <div class="card-body">
                     <div class="flex-grow ">
                         <div class="d-flex d-md-block d-xl-flex justify-content-between">
-                            <h6 class="preview-subject float-right">@Html.DisplayFor(x => item.BTitle) </h6>
-                            <p class="text-small"> @Html.DisplayFor(x => item.BViews) 123</p>
+                            <h6 class="preview-subject float-right">@Html.DisplayFor(x => item.Title) </h6>
+                            <p class="text-small"> @Html.DisplayFor(x => item.Views) 123</p>
                         </div>
-                        <p class="text-small text-warning">@Html.DisplayFor(x => item.BCreatedDateTime)</p>
+                        <p class="text-small text-warning">@Html.DisplayFor(x => item.CreatedDateTime)</p>
                         <div class="text-muted">
-                            <p class="list-unstyled">@Html.Raw(item.BContent.Substring(0, Math.Min(item.BContent.Length, 350)))...</p>
+                            <p class="list-unstyled">@Html.Raw(item.Content.Substring(0, Math.Min(item.Content.Length, 350)))...</p>
                         </div>
                     </div>
 

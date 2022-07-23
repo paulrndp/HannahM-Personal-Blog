@@ -1,12 +1,119 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using hannahM.Data;
+using hannahM.Models;
+using hannahM.Action;
+using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
+    //[SessionExpire]
     public class NewController : Controller
     {
+        private readonly ApplicationDbContext _db;
+
+        public NewController(ApplicationDbContext db)
+        {
+            _db = db;
+        }
+
         public IActionResult Index()
         {
             return View();
+        }
+        public IActionResult BlogPost()
+        {
+            return View();
+        }
+        public IActionResult RandomPost()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult BlogPost(Blog postData, string submit)
+        {
+            if (submit == "Draft")
+            {
+                if (ModelState.IsValid)
+                {
+                    Blog obj = new Blog();
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "draft";
+                    _db.Blog.Add(obj);
+                    _db.SaveChanges();
+                    TempData["success"] = "Draft";
+                    return RedirectToAction("Posts", "Blog");
+                }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+
+                }
+            }
+            else if (submit == "Published")
+            {
+                if (ModelState.IsValid)
+                {
+                    Blog obj = new Blog();
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "published";
+                    _db.Blog.Add(obj);
+                    _db.SaveChanges();
+                    TempData["success"] = "Published";
+                    return RedirectToAction("Posts", "Blog");
+                }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                }
+
+            }
+            return View(postData);
+
+            //else if (type == "Random")
+            //{
+            //    if (submit == "Draft")
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            RandomThoughts obj = new RandomThoughts();
+            //            obj.Title = post.randompost.Title;
+            //            //obj.Content = post.random.Content;
+            //            obj.Status = "draft";
+            //            _db.Random.Add(obj);
+            //            _db.SaveChanges();
+            //            TempData["success"] = "Random Thoughts Draft!";
+            //            return RedirectToAction("Post");
+            //        }
+            //        else
+            //        {
+            //            TempData["error"] = "There was an error submitting this form.";
+
+            //        }
+
+            //    }
+            //    else if (submit == "Published")
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            RandomThoughts obj = new RandomThoughts();
+            //            obj.Title = post.randompost.Title;
+            //            //obj.Content = post.random.Content;
+            //            obj.Status = "published";
+            //            _db.Random.Add(obj);
+            //            _db.SaveChanges();
+            //            TempData["success"] = "Random Thoughts Draft!";
+            //            return RedirectToAction("Post");
+            //        }
+            //        else
+            //        {
+            //            TempData["error"] = "There was an error submitting this form.";
+            //        }
+            //    }
+            //}
+
         }
     }
 }

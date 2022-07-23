@@ -9,14 +9,14 @@
                 <div class="card-body">
                     <div class="flex-grow ">
                         <div class="d-flex d-md-block d-xl-flex justify-content-between">
-                            <h6 class="preview-subject">@Html.DisplayFor(Model => Model.BTitle) </h6>
+                            <h6 class="preview-subject">@Html.DisplayFor(Model => Model.Title) </h6>
                         </div>
                         <div class="text-muted">
-                            <p class="list-unstyled">@Html.Raw(Model.BContent.Substring(0, Math.Min(Model.BContent.Length, 350)))...</p>
+                            <p class="list-unstyled">@Html.Raw(Model.Content.Substring(0, Math.Min(Model.Content.Length, 350)))...</p>
                         </div>
 
                     </div>
-                   <button class="btn btn-inverse-danger btn-fw" type="submit" name="submit" value="@Model.BStatus"><i class="bi bi-trash3-fill"></i> Delete</button>&nbsp;
+                   <button class="btn btn-inverse-danger btn-fw" type="submit" name="submit" value="@Model.Status"><i class="bi bi-trash3-fill"></i> Delete</button>&nbsp;
                     <a href="##" onClick="history.go(-1); return false;" class="btn btn-inverse-secondary btn-fw" ><i class="bi bi-arrow-90deg-left"></i> Back</a> 
                 </div>
             </div>

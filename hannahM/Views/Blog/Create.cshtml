@@ -8,7 +8,7 @@
         margin: 2px;
     }
 </style>
-
+ 
 <partial name="_Notification" />
 @using (Html.BeginForm("Create","Blog",FormMethod.Post))
 {
@@ -33,13 +33,13 @@
                         <div class="">
                             <div class="input-group mb-3">
                                 <span class="input-group-text" id="basic-addon1"> <i class="mdi mdi-lead-pencil"></i></span>
-                                <input name="BTitle" type="text" class="form-control text-white">
+                                <input name="Title" type="text" class="form-control text-white">
                             </div>
                         
                         </div>
                          
                         <div class="">
-                            <textarea name="BContent" class="ckeditor" ></textarea>
+                            <textarea name="Content" class="ckeditor" ></textarea>
                           
                             <script>
                                 CKEDITOR.replace('editor1', {

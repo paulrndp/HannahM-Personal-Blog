@@ -1,5 +1,6 @@
-﻿@*@model IEnumerable<Blog>
+﻿@model IEnumerable<Blog>
 
+@*
 <partial name="_Notification" />
 
 <div class="row">
@@ -25,6 +26,8 @@
         </div>
     }
 </div>*@
+
+<partial name="_Notification" />
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Draft and Published Post</span>
@@ -33,7 +36,9 @@
 </div>
 <div class="row">
     <div class="col-lg-4">
-        <div class="card card-small card-post mb-4">
+        @foreach (var item in Model)
+        {
+                   <div class="card card-small card-post mb-4">
             <div class="card-body">
                 <h5 class="card-title">Had denoting properly jointure which well books beyond</h5>
                 <p class="card-text text-muted"> In said to of poor full be post face snug. Introduced imprudence see say unpleasing devonshire acceptance son. Exeter longer...</p>
@@ -52,7 +57,10 @@
                     </a>
                 </div>
             </div>
-        </div>
+        </div> 
+        }
+
     </div>
+
 </div>
 

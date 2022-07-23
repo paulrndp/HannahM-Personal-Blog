@@ -57,8 +57,8 @@
                     {
                         <div class="card-transparent">
                             <div class="card-body">
-                                <h6 class="card-title"><a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" >@item.BTitle</a></h6>
-                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.BContent.Substring(0, Math.Min(item.BContent.Length, 50)), @"<[^>]+>", ""))...</p>
+                                <h6 class="card-title"><a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" >@item.Title</a></h6>
+                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
                             </div>
                         </div>
                     }
@@ -66,8 +66,8 @@
                     {
                         <div class="card-transparent">
                             <div class="card-body">
-                                <h6 class="card-title"><a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.RTitle</a></h6>
-                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.RContent.Substring(0, Math.Min(item.RContent.Length, 50)), @"<[^>]+>", ""))...</p>
+                                <h6 class="card-title"><a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h6>
+                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
                             </div>
                         </div>
                     }

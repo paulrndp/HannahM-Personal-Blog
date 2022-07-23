@@ -21,12 +21,12 @@ namespace hannahM.Controllers
         }
         public IActionResult RPublished()
         {
-            var status = _db.Random.Where(x => x.RStatus == "published").Select(stats => stats).ToList();
+            var status = _db.Random.Where(x => x.Status == "published").Select(stats => stats).ToList();
             return View("RPublished", status);
         }        
         public IActionResult Posts()
         {
-            var status = _db.Random.Where(x => x.RStatus == "draft").Select(stats => stats).ToList();
+            var status = _db.Random.Where(x => x.Status == "draft").Select(stats => stats).ToList();
             return View("Posts", status);
         }
         public IActionResult Edit(int? id)
@@ -68,9 +68,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     RandomThoughts obj = new RandomThoughts();
-                    obj.RTitle = postData.RTitle;
-                    obj.RContent = postData.RContent;
-                    obj.RStatus = "draft";
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "draft";
                     _db.Random.Add(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Random Thoughts Draft!";
@@ -83,9 +83,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     RandomThoughts obj = new RandomThoughts();
-                    obj.RTitle = postData.RTitle;
-                    obj.RContent = postData.RContent;
-                    obj.RStatus = "published";
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "published";
                     _db.Random.Add(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Random Thoughts Published!";
@@ -104,9 +104,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Random x = new Random();
-                    obj.RTitle = obj.RTitle;
-                    obj.RContent = obj.RContent;
-                    obj.RStatus = "draft";
+                    obj.Title = obj.Title;
+                    obj.Content = obj.Content;
+                    obj.Status = "draft";
                     _db.Random.Update(obj);
 
                     _db.SaveChanges();
@@ -118,9 +118,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Random x = new Random();
-                    obj.RTitle = obj.RTitle;
-                    obj.RContent = obj.RContent;
-                    obj.RStatus = "published";
+                    obj.Title = obj.Title;
+                    obj.Content = obj.Content;
+                    obj.Status = "published";
                     _db.Random.Update(obj);
                     _db.SaveChanges();
                 }

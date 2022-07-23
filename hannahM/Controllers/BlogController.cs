@@ -18,7 +18,7 @@ namespace hannahM.Controllers
 
         public IActionResult Published()
         {
-            var status = _db.Blog.Where(x => x.BStatus == "published").Select(stats => stats).ToList();
+            var status = _db.Blog.Where(x => x.Status == "published").Select(stats => stats).ToList();
             return View("Published", status);
         }
 
@@ -29,8 +29,12 @@ namespace hannahM.Controllers
 
         public IActionResult Posts()
         {
-            var status = _db.Blog.Where(x => x.BStatus == "draft").Select(stats => stats).ToList();
-            return View("Posts", status);
+            PostsViewModel allcontents = new PostsViewModel();
+            allcontents.listBlog = _db.Blog.ToList();
+            return View(allcontents);
+
+            //var status = _db.Blog.Where(x => x.Status == "draft").Select(stats => stats).ToList();
+            //return View("Posts", status);
         }
 
         public IActionResult Edit(int? id)
@@ -71,9 +75,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog x = new Blog();
-                    obj.BTitle = obj.BTitle;
-                    obj.BContent = obj.BContent;
-                    obj.BStatus = "draft";
+                    obj.Title = obj.Title;
+                    obj.Content = obj.Content;
+                    obj.Status = "draft";
                     _db.Blog.Update(obj);
 
                     _db.SaveChanges();
@@ -86,9 +90,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog x = new Blog();
-                    obj.BTitle = obj.BTitle;
-                    obj.BContent = obj.BContent;
-                    obj.BStatus = "published";
+                    obj.Title = obj.Title;
+                    obj.Content = obj.Content;
+                    obj.Status = "published";
                     _db.Blog.Update(obj);
                     _db.SaveChanges();
                 }
@@ -109,9 +113,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog obj = new Blog();
-                    obj.BTitle = postData.BTitle;
-                    obj.BContent = postData.BContent;
-                    obj.BStatus = "draft";
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "draft";
                     _db.Blog.Add(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Blog Draft!";
@@ -129,9 +133,9 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog obj = new Blog();
-                    obj.BTitle = postData.BTitle;
-                    obj.BContent = postData.BContent;
-                    obj.BStatus = "published";
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "published";
                     _db.Blog.Add(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Blog Published!";

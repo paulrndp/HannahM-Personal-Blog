@@ -1,23 +1,20 @@
-﻿
-<style> 
-    #toast-container > .toast-success { background-color: #28B463; } 
-    #toast-container > .toast-error { background-color: darkred; } 
-    #toast-container>div{
-    -moz-box-shadow: none !important;
-    -webkit-box-shadow: none !important;
-    box-shadow: none !important;
-}
-    </style>
+﻿<style>
+
+
+</style>
 
 
 @if (TempData["success"] != null)
 {
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
-
-        toastr.options.positionClass = 'toast-bottom-right';
-        toastr.success('@TempData["success"]');
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal({
+            title: "Success!",
+            text: "Post created successfully. ",
+            icon: "success",
+            button: "Ok",
+        });
 
     </script>
 
@@ -25,11 +22,14 @@
 @if (TempData["error"] != null)
 {
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript">
-
-      toastr.options.positionClass = 'toast-bottom-right';
-        toastr.error('@TempData["error"]');
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+        swal({
+            title: "Error!",
+            text: "There was an error submitting this form.",
+            icon: "warning",
+            button: "Close",
+        });
     </script>
 
 

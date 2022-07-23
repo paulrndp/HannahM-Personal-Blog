@@ -9,14 +9,14 @@ namespace hannahM.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
         [Required]
-        public string? RTitle { get; set; }
+        public string? Title { get; set; }
         [Required]
-        public string? RContent { get; set; }
-        public string? RStatus { get; set; }
-        public int? RViews { get; set; }
-        public DateTime RCreatedDateTime { get; set; } = DateTime.Now;
+        public string? Content { get; set; }
+        public string? Status { get; set; }
+        public int? Views { get; set; }
+        public DateTime CreatedDateTime { get; set; } = DateTime.Now;
 
         public string? Slug=>
-            RTitle?.Replace(" ","-").ToLower();
+            Title?.Replace(" ","-").ToLower();
     }
 }

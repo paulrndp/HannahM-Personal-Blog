@@ -18,9 +18,9 @@
                     {
                         <div class="card-body">
                             <h6 class="short">Blog</h6>
-                            <h5 class="card-title" style="text-align:center;">@item.BTitle</h5>
-                            <pre class="card-text text-muted" style="text-align:center;">Posted on @item.BCreatedDateTime.ToString("MMMM dd, yyyy") </pre>
-                            <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.BContent)</p></div>
+                            <h5 class="card-title" style="text-align:center;">@item.Title</h5>
+                            <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
+                            <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
                         </div>
                     }
                 </div>
