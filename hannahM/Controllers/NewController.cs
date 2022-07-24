@@ -71,49 +71,50 @@ namespace hannahM.Controllers
 
             }
             return View(postData);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RandomPost(RandomThoughts postData, string submit)
+        {
+            if (submit == "Draft")
+            {
+                if (ModelState.IsValid)
+                {
+                    RandomThoughts obj = new RandomThoughts();
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "draft";
+                    _db.Random.Add(obj);
+                    _db.SaveChanges();
+                    TempData["success"] = "Draft";
+                    return RedirectToAction("Posts", "Random");
+                }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
 
-            //else if (type == "Random")
-            //{
-            //    if (submit == "Draft")
-            //    {
-            //        if (ModelState.IsValid)
-            //        {
-            //            RandomThoughts obj = new RandomThoughts();
-            //            obj.Title = post.randompost.Title;
-            //            //obj.Content = post.random.Content;
-            //            obj.Status = "draft";
-            //            _db.Random.Add(obj);
-            //            _db.SaveChanges();
-            //            TempData["success"] = "Random Thoughts Draft!";
-            //            return RedirectToAction("Post");
-            //        }
-            //        else
-            //        {
-            //            TempData["error"] = "There was an error submitting this form.";
+                }
+            }
+            else if (submit == "Published")
+            {
+                if (ModelState.IsValid)
+                {
+                    RandomThoughts obj = new RandomThoughts();
+                    obj.Title = postData.Title;
+                    obj.Content = postData.Content;
+                    obj.Status = "published";
+                    _db.Random.Add(obj);
+                    _db.SaveChanges();
+                    TempData["success"] = "Published";
+                    return RedirectToAction("Posts", "Random");
+                }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                }
 
-            //        }
-
-            //    }
-            //    else if (submit == "Published")
-            //    {
-            //        if (ModelState.IsValid)
-            //        {
-            //            RandomThoughts obj = new RandomThoughts();
-            //            obj.Title = post.randompost.Title;
-            //            //obj.Content = post.random.Content;
-            //            obj.Status = "published";
-            //            _db.Random.Add(obj);
-            //            _db.SaveChanges();
-            //            TempData["success"] = "Random Thoughts Draft!";
-            //            return RedirectToAction("Post");
-            //        }
-            //        else
-            //        {
-            //            TempData["error"] = "There was an error submitting this form.";
-            //        }
-            //    }
-            //}
-
+            }
+            return View(postData);
         }
     }
 }

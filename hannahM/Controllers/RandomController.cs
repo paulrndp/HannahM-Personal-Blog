@@ -19,14 +19,14 @@ namespace hannahM.Controllers
         {
             return View();
         }
-        public IActionResult RPublished()
+        public IActionResult Published()
         {
             var status = _db.Random.Where(x => x.Status == "published").Select(stats => stats).ToList();
             return View("RPublished", status);
         }        
         public IActionResult Posts()
         {
-            var status = _db.Random.Where(x => x.Status == "draft").Select(stats => stats).ToList();
+            var status = _db.Random.OrderByDescending(x => x.Id).ToList();
             return View("Posts", status);
         }
         public IActionResult Edit(int? id)

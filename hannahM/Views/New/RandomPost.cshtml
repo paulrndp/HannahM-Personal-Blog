@@ -1,17 +1,19 @@
-﻿<div class="page-header row no-gutters py-4">
+﻿@model RandomThoughts
+
+<div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Blog & Random Thoughts Posts</span>
         <h3 class="page-title">New Random Thoughts Post</h3>
     </div>
 </div>
-
-<form method="post" enctype="multipart/form-data">
+<partial name="_Notification"/>
+<form method="post">
     <div class="row">
         <div class="col-lg-9 col-md-12">
             <div class="card card-small mb-3">
                 <div class="card-body">
-                        <input name="blogpost.Title" class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
-                        <div id="editor-container" class="add-new-post__editor mb-1"></div>
+                    <input asp-for="Title" class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
+                    <textarea asp-for="Content" class="ckeditor" id="editor1"></textarea>
                 </div>
             </div>
         </div>
@@ -22,13 +24,6 @@
                 </div>
                 <div class='card-body p-0'>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-3">
-                            <span class="d-flex">
-                                <i class="material-icons mr-1">subtitles</i>
-                                <strong class="mr-1">Words</strong>
-                                <strong class="ml-auto text-warning" id="wordCount">0</strong>
-                            </span>
-                        </li>
                         <li class="list-group-item d-flex px-3">
                             <button class="btn btn-sm btn-outline-accent" type="submit" name="submit" value="Draft">
                                 <i class="material-icons">save</i> Save Draft
@@ -44,3 +39,10 @@
         </div>
     </div>
 </form>
+
+
+<script>
+    CKEDITOR.replace('editor1', {
+        height: 400
+    });
+</script>

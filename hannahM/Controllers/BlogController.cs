@@ -29,12 +29,9 @@ namespace hannahM.Controllers
 
         public IActionResult Posts()
         {
-            PostsViewModel allcontents = new PostsViewModel();
-            allcontents.listBlog = _db.Blog.ToList();
-            return View(allcontents);
 
-            //var status = _db.Blog.Where(x => x.Status == "draft").Select(stats => stats).ToList();
-            //return View("Posts", status);
+            var status = _db.Blog.OrderByDescending(x => x.Id).ToList();
+            return View("Posts", status);
         }
 
         public IActionResult Edit(int? id)

@@ -1,5 +1,5 @@
 ﻿@model Blog
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
 <partial name="_Notification" />
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
@@ -13,7 +13,7 @@
             <div class="card card-small mb-3">
                 <div class="card-body">
                     <input asp-for="Title" class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
-                    <textarea asp-for="Content" class="ckeditor" id="myText"></textarea>
+                    <textarea asp-for="Content" class="ckeditor" id="editor1"></textarea>
                 </div>
             </div>
         </div>
@@ -24,17 +24,6 @@
                 </div>
                 <div class='card-body p-0'>
                     <ul class="list-group list-group-flush">
-                        <li class="list-group-item p-3">
-                            <span class="d-flex">
-                                <i class="material-icons mr-1">subtitles</i>
-                                <strong class="mr-1">Words</strong>
-                                <strong class="ml-auto text-warning" id="counter">0</strong>
-
-
-                            </span>
-                            <span id="wordCount">0</span> Words
-
-                        </li>
                         <li class="list-group-item d-flex px-3">
                             <button class="btn btn-sm btn-outline-accent" type="submit" name="submit" value="Draft">
                                 <i class="material-icons">save</i> Save Draft
@@ -50,61 +39,10 @@
         </div>
     </div>
 </form>
-<h2>
-    Let's practice:
-</h2>
-<div class="container">
-    <h1>Word Counter</h1>
-    <textarea placeholder="Enter your text here..."></textarea>
-    <div class="output row">
-        <div>Characters: <span id="characterCount">0</span></div>
-        <div>Words: <span id="wordCount">0</span></div>
-    </div>
-    <div class="output row">
-        <div>Sentences: <span id="sentenceCount">0</span></div>
-        <div>Paragraphs: <span id="paragraphCount">0</span></div>
-    </div>
-    <div class="output row">
-        <div>Reading Time: <span id="readingTime">0</span></div>
-        <div id="readability">Show readability score.</div>
-    </div>
-    <div class="keywords">
-        Top keywords:
-        <ul id="topKeywords">
-        </ul>
-    </div>
-</div>
+
+
 <script>
-    counter = function() {
-        var value = $('#text').val();
-
-        if (value.length == 0) {
-            $('#wordCount').html(0);
-            $('#totalChars').html(0);
-            $('#charCount').html(0);
-            $('#charCountNoSpace').html(0);
-            return;
-        }
-
-        var regex = /\s+/gi;
-        var wordCount = value.trim().replace(regex, ' ').split(' ').length;
-        var totalChars = value.length;
-        var charCount = value.trim().length;
-        var charCountNoSpace = value.replace(regex, '').length;
-
-        $('#wordCount').html(wordCount);
-        $('#totalChars').html(totalChars);
-        $('#charCount').html(charCount);
-        $('#charCountNoSpace').html(charCountNoSpace);
-    };
-
-    $(document).ready(function() {
-        $('#count').click(counter);
-        $('#text').change(counter);
-        $('#text').keydown(counter);
-        $('#text').keypress(counter);
-        $('#text').keyup(counter);
-        $('#text').blur(counter);
-        $('#text').focus(counter);
+    CKEDITOR.replace('editor1', {
+        height: 400
     });
 </script>
