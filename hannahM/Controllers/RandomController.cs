@@ -23,7 +23,7 @@ namespace hannahM.Controllers
         {
             var status = _db.Random.Where(x => x.Status == "published").Select(stats => stats).ToList();
             return View("RPublished", status);
-        }        
+        }
         public IActionResult Posts()
         {
             var status = _db.Random.OrderByDescending(x => x.Id).ToList();
@@ -103,58 +103,61 @@ namespace hannahM.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    Random x = new Random();
-                    obj.Title = obj.Title;
-                    obj.Content = obj.Content;
+                    RandomThoughts x = new RandomThoughts();
+                    x.Title = obj.Title;
+                    x.Content = obj.Content;
                     obj.Status = "draft";
                     _db.Random.Update(obj);
-
                     _db.SaveChanges();
+                    TempData["success"] = "Successfully updated as draft post.";
+
                 }
-                return RedirectToAction("RDraft");
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                    return View("Edit", obj);
+
+                }
+                return View("Edit", obj);
+
             }
             else if (submit == "Published")
             {
                 if (ModelState.IsValid)
                 {
-                    Random x = new Random();
-                    obj.Title = obj.Title;
-                    obj.Content = obj.Content;
+                    RandomThoughts x = new RandomThoughts();
+                    x.Title = obj.Title;
+                    x.Content = obj.Content;
                     obj.Status = "published";
                     _db.Random.Update(obj);
                     _db.SaveChanges();
-                }
-                return RedirectToAction("RPublished");
-            }
-            return View(obj);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteRandom(int? id, string submit)
-        {
+                    TempData["success"] = "Successfully updated as published post.";
 
-            var blogFound = _db.Random.Find(id);
-            if (blogFound == null)
+                }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                    return View("Edit", obj);
+
+                }
+                return View("Edit", obj);
+
+            }
+
+            return View(obj);
+
+        }
+        public IActionResult postDelete(int? id)
+        {
+            var blog = _db.Random.Find(id);
+            if (blog == null)
             {
                 return NotFound();
             }
-
-            _db.Random.Remove(blogFound);
+            _db.Random.Remove(blog);
             _db.SaveChanges();
-            TempData["success"] = "Random Thoughts Deleted!";
-
-            if (submit == "draft")
-            {
-                return RedirectToAction("RDraft");
-            }
-            else if (submit == "published")
-            {
-                return RedirectToAction("RPublished");
-            }
-
-            return View();
-
-
+            TempData["success"] = "Blog successfully deleted.";
+            return RedirectToAction("Posts");
         }
     }
 }

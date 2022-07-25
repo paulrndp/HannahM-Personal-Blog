@@ -42,7 +42,7 @@ namespace hannahM.Controllers
                     obj.Status = "draft";
                     _db.Blog.Add(obj);
                     _db.SaveChanges();
-                    TempData["success"] = "Draft";
+                    TempData["success"] = "Successfully created as draft post.";
                     return RedirectToAction("Posts", "Blog");
                 }
                 else
@@ -61,7 +61,7 @@ namespace hannahM.Controllers
                     obj.Status = "published";
                     _db.Blog.Add(obj);
                     _db.SaveChanges();
-                    TempData["success"] = "Published";
+                    TempData["success"] = "Successfully created as published post.";
                     return RedirectToAction("Posts", "Blog");
                 }
                 else
@@ -86,7 +86,7 @@ namespace hannahM.Controllers
                     obj.Status = "draft";
                     _db.Random.Add(obj);
                     _db.SaveChanges();
-                    TempData["success"] = "Draft";
+                    TempData["success"] = "Successfully created as draft post.";
                     return RedirectToAction("Posts", "Random");
                 }
                 else
@@ -105,7 +105,7 @@ namespace hannahM.Controllers
                     obj.Status = "published";
                     _db.Random.Add(obj);
                     _db.SaveChanges();
-                    TempData["success"] = "Published";
+                    TempData["success"] = "Successfully created as published post.";
                     return RedirectToAction("Posts", "Random");
                 }
                 else

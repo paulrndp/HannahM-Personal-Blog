@@ -15,18 +15,6 @@ namespace hannahM.Controllers
         {
             _db = db;
         }
-
-        public IActionResult Published()
-        {
-            var status = _db.Blog.Where(x => x.Status == "published").Select(stats => stats).ToList();
-            return View("Published", status);
-        }
-
-        public IActionResult Create()
-        {
-            return View();
-        }
-
         public IActionResult Posts()
         {
 
@@ -48,21 +36,6 @@ namespace hannahM.Controllers
             return View(blogFound);
 
         }
-        public IActionResult Delete(int? id)
-        {
-            if (id == null || id == 0)
-            {
-                return NotFound();
-            }
-            var blogFound = _db.Blog.Find(id);
-            if (blogFound == null)
-            {
-                return NotFound();
-            }
-            return View(blogFound);
-
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Edit(Blog obj, string submit)
@@ -72,14 +45,21 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog x = new Blog();
-                    obj.Title = obj.Title;
-                    obj.Content = obj.Content;
+                    x.Title = obj.Title;
+                    x.Content = obj.Content;
                     obj.Status = "draft";
                     _db.Blog.Update(obj);
-
                     _db.SaveChanges();
+                    TempData["success"] = "Successfully updated as draft post.";
+
                 }
-                return RedirectToAction("Draft");
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                    return View("Edit", obj);
+
+                }
+                return View("Edit", obj);
 
             }
             else if (submit == "Published")
@@ -87,13 +67,21 @@ namespace hannahM.Controllers
                 if (ModelState.IsValid)
                 {
                     Blog x = new Blog();
-                    obj.Title = obj.Title;
-                    obj.Content = obj.Content;
+                    x.Title = obj.Title;
+                    x.Content = obj.Content;
                     obj.Status = "published";
                     _db.Blog.Update(obj);
                     _db.SaveChanges();
+                    TempData["success"] = "Successfully updated as published post.";
+
                 }
-                return RedirectToAction("Published");
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                    return View("Edit", obj);
+
+                }
+                return View("Edit", obj);
 
             }
 
@@ -101,79 +89,17 @@ namespace hannahM.Controllers
 
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Create(Blog postData, string submit)
+        public IActionResult postDelete(int? id)
         {
-            if (submit == "Draft")
-            {
-                if (ModelState.IsValid)
-                {
-                    Blog obj = new Blog();
-                    obj.Title = postData.Title;
-                    obj.Content = postData.Content;
-                    obj.Status = "draft";
-                    _db.Blog.Add(obj);
-                    _db.SaveChanges();
-                    TempData["success"] = "Blog Draft!";
-                    return RedirectToAction("Draft");
-                }
-                else
-                {
-                    TempData["error"] = "There was an error submitting this form.";
-
-                }
-
-            }
-            else if (submit == "Published")
-            {
-                if (ModelState.IsValid)
-                {
-                    Blog obj = new Blog();
-                    obj.Title = postData.Title;
-                    obj.Content = postData.Content;
-                    obj.Status = "published";
-                    _db.Blog.Add(obj);
-                    _db.SaveChanges();
-                    TempData["success"] = "Blog Published!";
-                    return RedirectToAction("Published");
-                }
-                else
-                {
-                    TempData["error"] = "There was an error submitting this form.";
-                }
-
-            }
-            return View(postData);
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult DeleteBlog(int? id, string submit)
-        {
-
-            var blogFound = _db.Blog.Find(id);
-            if (blogFound == null)
+            var blog = _db.Blog.Find(id);
+            if (blog == null)
             {
                 return NotFound();
             }
-
-            _db.Blog.Remove(blogFound);
+            _db.Blog.Remove(blog);
             _db.SaveChanges();
-            TempData["success"] = "Blog deleted!";
-
-            if (submit == "draft")
-            {
-                return RedirectToAction("Draft");
-            }
-            else if (submit == "published")
-            {
-                return RedirectToAction("Published");
-            }
-
-            return View();
-
-
+            TempData["success"] = "Blog successfully deleted.";
+            return RedirectToAction("Posts");
         }
-
     }
 }

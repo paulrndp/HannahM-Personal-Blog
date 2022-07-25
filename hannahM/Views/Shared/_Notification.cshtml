@@ -1,20 +1,14 @@
-﻿<style>
-
-
-</style>
-
-
-@if (TempData["success"] != null)
+﻿@if (TempData["success"] != null)
 {
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        swal({
-            title: "Success!",
-            text: "Post created successfully. ",
-            icon: "success",
-            button: "Ok",
-        });
+        Swal.fire({
+            icon: 'success',
+            title: '@TempData["success"]',
+            showConfirmButton: false,
+            timer: 2500
+        })
 
     </script>
 
@@ -22,14 +16,14 @@
 @if (TempData["error"] != null)
 {
     <script src="//code.jquery.com/jquery-latest.min.js"></script>
-    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        swal({
-            title: "Error!",
-            text: "There was an error submitting this form.",
-            icon: "warning",
-            button: "Close",
-        });
+        Swal.fire({
+            icon: 'error',
+            title: 'There was an error submitting this form.',
+            showConfirmButton: false,
+            timer: 2500
+        })
     </script>
 
 
