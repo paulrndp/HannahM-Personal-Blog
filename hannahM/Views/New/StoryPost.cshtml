@@ -4,12 +4,12 @@
 
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-        <span class="text-uppercase page-subtitle">@Html.DisplayFor(model => model.Title)</span>
-        <h3 class="page-title">Edit Story Details</h3>
+        <span class="text-uppercase page-subtitle">Create New Story</span>
+        <h3 class="page-title">Story Details</h3>
     </div>
 </div>
-    @using (Html.BeginForm("Edit", "Story", FormMethod.Post, new { enctype = "multipart/form-data" }))
-    {    <div class="row">
+<form method="post" enctype="multipart/form-data">
+    <div class="row">
         <div class="col-lg-9 col-md-12">
             <div class="card card-small mb-4">
                 <ul class="list-group list-group-flush">
@@ -19,23 +19,23 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Title</label>
-                                        <input asp-for="Title" type="text" class="form-control" placeholder="Title...">
+                                        <input name="Title" type="text" class="form-control" placeholder="Title...">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Description</label>
-                                        <textarea asp-for="Desc" class="form-control" rows="5" placeholder="Description..."></textarea>
+                                        <textarea name="Desc" class="form-control" rows="5" placeholder="Description..."></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Tags</label>
-                                        <input asp-for="Tags" type="text" class="form-control tagin txtCustom" data-tagin-separator=" ">
+                                        <input name="Tags" type="text" class="form-control tagin txtCustom" data-tagin-separator=" ">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Category</label>
-                                        <select class="form-control" asp-for="Genre">
+                                        <select class="form-control" name="Genre">
                                             <option value="" selected="true" disabled="disabled" class="text-muted">Select a category...</option>
                                             <option value="Action">Action</option>
                                             <option value="Adventure">Adventure</option>
@@ -64,18 +64,8 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="card stretch-card bg-transparent">
-                                    @if (Model.Cover != null && !String.IsNullOrEmpty(Convert.ToBase64String(Model.Cover)))
-                                    {
-                                        <img id="img-container" class="newbtn img-fluid" src="data:image/jpg;base64,@Convert.ToBase64String(Model.Cover)">
-                                        <input id="pic" type="file" name="Cover" onchange="previewFile(this);">
-                                    }
-                                    else
-                                    {
-                                        <img id="img-container" class="newbtn img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
-                                        <input id="pic" type="file" onchange="previewFile(this);">
-                                    }
-
-
+                                    <img id="img-container" class="newbtn img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
+                                    <input name="Cover" id="pic" type="file" onchange="previewFile(this);">
                                 </div>
                                 <p class="card-description"> Stories with a cover image get 23x more reads than ones without </p>
                                 <p class="card-description"> Must be in PNG, GIF, or JPG format, smaller than 2MB. Recommended cover dimensions: <code>512x800</code> pixels </p>
@@ -103,55 +93,7 @@
             </div>
         </div>
     </div>
-}
+</form>
 <script src="https://unpkg.com/prismjs/prism.js"></script>
 <script src="https://unpkg.com/prismjs/plugins/file-highlight/prism-file-highlight.min.js"></script>
 <script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
-
-@*@model Chapters
-
-<style>
-    .pullright {
-        float: right;
-        margin: 2px;
-    }
-</style>
-<partial name="_Notification" />
-
-@using (Html.BeginForm("Edit", "Story", FormMethod.Post))
-{
-  <input asp-for="story_id" type="text" name="sID">
-
-    <div class="row">
-        <div class="d-flex align-items-center justify-content-center">
-            <div class="col-8">
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-10">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1"> <i class="mdi mdi-lead-pencil"></i></span>
-                                    <input asp-for="Title" type="text" class="form-control text-white col-md-6" aria-describedby="basic-addon1" >
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-warning btn-fw pullright" type="submit"><i class="bi bi-check-circle"></i>Update</button>
-                            </div>
-                        </div>
-
-                        <div class="">
-                            <textarea class="ckeditor" asp-for="Content"></textarea>
-                            <script>
-                                CKEDITOR.replace('editor1', {
-                                    height: 400
-                                });
-                            </script>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-}
-*@

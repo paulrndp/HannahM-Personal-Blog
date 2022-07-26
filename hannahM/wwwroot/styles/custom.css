@@ -1,0 +1,38 @@
+﻿#pic {
+    display: none;
+}
+
+.newbtn {
+    cursor: pointer;
+}
+
+#img-container {
+    object-fit: cover;
+    height: 390px;
+}
+
+.txtCustom > input[type="text"], textarea {
+    background-color: white;
+    color: black;
+}
+
+.tagin-wrapper.focus {
+    color: none;
+    outline: 0;
+    border-color: green;
+    background-color: #2A3038;
+    box-shadow: none
+}
+.ex3 {
+    height: 650px;
+    overflow: auto;
+    background-color: transparent;
+}
+.list-group {
+    max-height: 750px;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+::-webkit-scrollbar {
+    display: none;
+}

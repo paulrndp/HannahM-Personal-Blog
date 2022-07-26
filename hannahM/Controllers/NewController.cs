@@ -26,7 +26,12 @@ namespace hannahM.Controllers
         public IActionResult RandomPost()
         {
             return View();
+        }        
+        public IActionResult StoryPost()
+        {
+            return View();
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -115,6 +120,37 @@ namespace hannahM.Controllers
 
             }
             return View(postData);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> StoryPost(Story obj, List<IFormFile> Cover)
+        {
+            if (ModelState.IsValid)
+            {
+                Story story = new Story();
+                story.Title = obj.Title;
+                story.Desc = obj.Desc;
+                story.Tags = obj.Tags;
+                story.Genre = obj.Genre;
+
+                foreach (var item in Cover)
+                {
+                    if (item.Length > 0)
+                    {
+                        using (var stream = new MemoryStream())
+                        {
+                            await item.CopyToAsync(stream);
+                            story.Cover = stream.ToArray();
+                        }
+                    }
+                }
+                _db.Stories.Add(story);
+                _db.SaveChanges();
+                TempData["success"] = story.Title + " Successfully Created";
+                return RedirectToAction("StoryPost");
+            }
+            return View(obj);
+
         }
     }
 }

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
-    [SessionExpire]
+    //[SessionExpire]
     public class StoryController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -16,20 +16,10 @@ namespace hannahM.Controllers
             _db = db;
         }
         //VIEW
-        public IActionResult SCreate()
-        {
-
-            return View();
-        }
         public IActionResult Edit(int? id)
         {
-            var find = _db.Chapter.Find(id);
-            if (find == null)
-            {
-                return NotFound();
-            }
-
-            return View(find);
+            var status = _db.Stories.Where(x => x.Id == id).Select(stats => stats).Single();
+            return View("Edit", status);
 
         }
         public IActionResult NewChapter(int? id)
@@ -51,6 +41,10 @@ namespace hannahM.Controllers
         }
         public IActionResult Chapters(int id)
         {
+
+            var storyID = _db.Chapter.Where(x => x.Id == id).Select(stats => stats.story_id).Single();
+            ViewBag.Title = _db.Stories.Where(x => x.Id == Convert.ToInt32(storyID)).Select(stats => stats.Title).Single();
+
             var query = _db.Chapter.Where(x => x.story_id == id).Select(all => all).ToList();
             return View("Chapters", query);
 
@@ -64,7 +58,7 @@ namespace hannahM.Controllers
             //    return NotFound();
             //}
             //return View(dbFound);
-        }
+        }        
         public IActionResult Details(int id)
         {
 
@@ -96,54 +90,14 @@ namespace hannahM.Controllers
             var myStory = _db.Stories.Select(all => all).ToList();
             return View("MyStory", myStory);
 
-            //IEnumerable<Story> mystories = _db.Stories;
+            //IEnumerable<StoryViewModel> mystories = new StoryViewModel();
             //return View(mystories);
 
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SCreate(IndexVM obj, List<IFormFile> Cover)
-        {
-
-            if (ModelState.IsValid)
-            {
-                Story story = new Story();
-                story.Title = obj.stories.Title;
-                story.Desc = obj.stories.Desc;
-                story.Tags = obj.stories.Tags;
-                story.Genre = obj.stories.Genre;
-
-                foreach (var item in Cover)
-                {
-                    if (item.Length > 0)
-                    {
-                        using (var stream = new MemoryStream())
-                        {
-                            await item.CopyToAsync(stream);
-                            story.Cover = stream.ToArray();
-                        }
-                    }
-                }
-
-                _db.Stories.Add(story);
-                _db.SaveChanges();
-
-                Chapters chptrs = new Chapters();
-                chptrs.Title = obj.chapters.Title;
-                chptrs.Content = obj.chapters.Content;
-                chptrs.story_id = story.Id;
-
-                _db.Chapter.Add(chptrs);
-                _db.SaveChanges();
-                TempData["success"] = "Successfully Created " + story.Title;
-                return RedirectToAction("MyStory");
-            }
-            return View(obj);
-
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Details(Story obj, List<IFormFile> Cover)
+        public async Task<IActionResult> Edit(Story obj, List<IFormFile> Cover)
         {
             if (Cover.Count == 0)
             {
@@ -158,8 +112,16 @@ namespace hannahM.Controllers
                     _db.Entry(obj).Property("Cover").IsModified = false;
                     _db.SaveChanges();
                     TempData["success"] = "Successfully Updated! ";
-                    return RedirectToAction("Details");
+                    return RedirectToAction("Edit", obj);
+
                 }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+
+                }
+                return RedirectToAction("Edit", obj);
+
             }
             else
             {
@@ -184,11 +146,16 @@ namespace hannahM.Controllers
                     _db.Stories.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully Updated! ";
-                    return RedirectToAction("Details");
+                    return RedirectToAction("Edit", obj);
+
                 }
+                else
+                {
+                    TempData["error"] = "There was an error submitting this form.";
+                }
+                return RedirectToAction("Edit", obj);
 
             }
-            return View(obj);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -208,22 +175,22 @@ namespace hannahM.Controllers
             }
             return View(obj);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(Chapters obj, int id, string sID)
-        {
-            if (ModelState.IsValid)
-            {
-                _db.Entry(obj).State = EntityState.Modified;
-                _db.Entry(obj).Property("Title").IsModified = true;
-                _db.Entry(obj).Property("Content").IsModified = true;
-                _db.Entry(obj).Property("story_id").IsModified = false;
-                _db.Entry(obj).Property("CreatedDateTime").IsModified = false; ;
-                _db.SaveChanges();
-                TempData["success"] = obj.Title + " Successfully Updated! ";
-                return RedirectToAction("Chapters", "Story", new { id = Convert.ToInt32(sID) });
-            }
-            return View(obj);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Edit(Chapters obj, int id, string sID)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _db.Entry(obj).State = EntityState.Modified;
+        //        _db.Entry(obj).Property("Title").IsModified = true;
+        //        _db.Entry(obj).Property("Content").IsModified = true;
+        //        _db.Entry(obj).Property("story_id").IsModified = false;
+        //        _db.Entry(obj).Property("CreatedDateTime").IsModified = false; ;
+        //        _db.SaveChanges();
+        //        TempData["success"] = obj.Title + " Successfully Updated! ";
+        //        return RedirectToAction("Chapters", "Story", new { id = Convert.ToInt32(sID) });
+        //    }
+        //    return View(obj);
+        //}
     }
 }
