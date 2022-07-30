@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Chapters>
+﻿@model IEnumerable<StoryViewModel>
 
 <partial name="_Notification" />
 
@@ -8,121 +8,66 @@
         <h3 class="page-title">Chapters</h3>
     </div>
 </div>
-
 <div class="row">
-    <div class="col-lg-4 mb-3">
-        <div class="col-md-12">
-            <div class="list-group">
-                @foreach (var item in Model)
-                {
-                      <a class="list-group-item list-group-item-action">@item.Title </a>
-                }
+    <div class="col-lg-5 col-sm-12 mb-3">
+        <div class="card">
+                <div class="row g-0">
+                    <div class="col-sm-5">
+                        @if (ViewBag.Cover != null && !String.IsNullOrEmpty(Convert.ToBase64String(ViewBag.Cover)))
+                        {
+                            <img src="data:image/jpg;base64,@Convert.ToBase64String(ViewBag.Cover)" class="card-img-top h-100" alt="...">
+                        }
+                        else
+                        {
+                            <img src="//upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg" class="card-img-top h-100" alt="...">
+                        }
+                    </div>
+                    <div class="col-sm-7">
+                        <div class="card-body">
+                            <h5 class="card-title">@ViewBag.Title</h5>
+                            <p class="card-text">@ViewBag.Desc</p>
+                            <div class="d-flex mb-3">
+                                <small class="text-muted"><i class="fas fa-list mr-1"></i>3 Part</small>&ensp;
+                                <small class="text-muted"><i class="fas fa-eye mr-1">&nbsp;</i>1,234 Reads</small>&ensp;
+                            </div>
+                        </div>
+                    </div>
                 </div>
         </div>
     </div>
-    <div class="col-lg-8">
-        <div class="col-lg-12 col-md-12">
-            <div class="card card-small mb-3">
-                <div class="card-body">
-                     <input name="" class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
-                    <textarea class="ckeditor" id="editor1"></textarea>                       
-                </div>
+    <div class="col-lg-7 mb-3">
+        <div class="card card-small mb-4">
+            <h6 class="card-header d-flex justify-content-between align-items-center">
+                <b>Table of Contents</b>
+                <button type="button" class="btn btn-sm btn-success" asp-action="Add"><i class="fas fa-plus mr-1"></i> Add Chapter</button>
+            </h6>
+            <div class="card-body p-0 pb-3 table-responsive">
+                <table class="table mb-0 table-borderless">
+                    <thead>
+                        <tr class="border-bottom">
+                            <th>Chapter Title</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td href="">
+                                    @item.chapters.Title
+                                </td>
+                                <td class="text-right">
+                                    <a asp-controller="Story" asp-action="EditChapter" asp-route-id="@item.chapters.Id" asp-route-slug="@item.chapters.Slug" type="button" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
-        </div>
-        <div class="col-md-12">
-            <div class='card card-small mb-3'>
-                <div class="card-header border-bottom">
-                    <h6 class="m-0">Actions</h6>
-                </div>
-                <div class='card-body p-0'>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item d-flex px-3">
-                            <button class="btn btn-sm btn-outline-accent" type="submit" name="submit" value="Draft">
-                                <i class="material-icons">save</i> Save Draft
-                            </button>
-                            <button class="btn btn-sm btn-accent ml-auto" type="submit" name="submit" value="Published">
-                                <i class="material-icons">file_copy</i> Publish
-                            </button>
-                        </li>
-
-                    </ul>
-                </div>
-            </div>
-
         </div>
     </div>
-
 </div>
 <script>
     CKEDITOR.replace('editor1', {
         height: 350
     });
 </script>
-@*@model IEnumerable<Chapters>
-<style>
-    .pullright {
-        float: right;
-        margin: 2px;
-    }
-</style>
-<partial name="_Notification" />
-@using (Html.BeginForm("Chapters", "Story", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @foreach (var item in Model)
-    {
-
-        <div class="row">
-            <div class="d-flex align-items-center justify-content-center">
-                <div class="col-7 stretch-card mb-2">
-                    <div class="card ">
-                        <div class="card-body">
-                            <div class="col-sm-12 mb-3">
-                                <h3 class="d-inline-block align-middle text-warning">@item.Title</h3>
-                                <ul class="navbar-nav navbar-nav-right d-inline-block pullright">
-                                    <li class="nav-item dropdown border-left">
-                                        <a class="btn btn-primary" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-                                            &nbsp; <i class="bi bi-three-dots"></i>
-                                            <span class="count bg-danger"></span>
-                                        </a>
-                                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-                                            <a class="dropdown-item preview-item" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id">
-                                                <div class="preview-thumbnail">
-                                                    <div class="preview-icon bg-dark rounded-circle">
-                                                        <i class="bi bi-pencil-square text-success"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="preview-item-content">
-                                                    <p class="preview-subject mb-1 text-light pe-auto">Edit</p>
-                                                    <p class="text-muted ellipsis mb-0"> Update content </p>
-                                                </div>
-                                            </a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item preview-item" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id">
-                                                <div class="preview-thumbnail">
-                                                    <div class="preview-icon bg-dark rounded-circle">
-                                                        <i class="bi bi-trash3 text-danger"></i>
-                                                    </div>
-                                                </div>
-                                                <div class="preview-item-content">
-                                                    <p class="preview-subject mb-1 text-light">Delete</p>
-                                                    <p class="text-muted ellipsis mb-0"> Delete this chapter </p>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-
-                            </div>
-
-                            <p class="text-muted"><em class="text-muted">@Html.Raw(item.Content.Substring(0, Math.Min(item.Content.Length, 150)))... </em></p>
-                            <p class="card-description">
-                                Published  -  @item.CreatedDateTime.ToString("MMMM dd yyyy")
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    }
-}
-*@

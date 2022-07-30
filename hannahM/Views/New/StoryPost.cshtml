@@ -8,7 +8,7 @@
         <h3 class="page-title">Story Details</h3>
     </div>
 </div>
-<form method="post" enctype="multipart/form-data">
+<form id="form" method="post" enctype="multipart/form-data">
     <div class="row">
         <div class="col-lg-9 col-md-12">
             <div class="card card-small mb-4">
@@ -19,23 +19,23 @@
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Title</label>
-                                        <input name="Title" type="text" class="form-control" placeholder="Title...">
+                                        <input id="title" name="Title" type="text" class="form-control" placeholder="Title...">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-12">
                                         <label>Description</label>
-                                        <textarea name="Desc" class="form-control" rows="5" placeholder="Description..."></textarea>
+                                        <textarea id="desc" name="Desc" class="form-control" rows="5" placeholder="Description..."></textarea>
                                     </div>
                                     <div class="form-group col-md-12">
                                         <label>Tags</label>
-                                        <input name="Tags" type="text" class="form-control tagin txtCustom" data-tagin-separator=" ">
+                                        <input name="Tags" class="form-control tagin txtCustom" data-tagin-separator=" ">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
                                         <label>Category</label>
-                                        <select class="form-control" name="Genre">
+                                        <select id="genre" class="form-control" name="Genre">
                                             <option value="" selected="true" disabled="disabled" class="text-muted">Select a category...</option>
                                             <option value="Action">Action</option>
                                             <option value="Adventure">Adventure</option>
@@ -83,7 +83,7 @@
                 <div class='card-body p-0'>
                     <ul class="list-group list-group-flush">
                         <li class="list-group-item d-flex px-3">
-                            <button class="btn btn-sm btn-accent ml-auto" type="submit">
+                            <button id="validate" class="btn btn-sm btn-accent ml-auto" type="submit">
                                 <i class="material-icons">file_copy</i> Save
                             </button>
                         </li>
@@ -97,3 +97,21 @@
 <script src="https://unpkg.com/prismjs/prism.js"></script>
 <script src="https://unpkg.com/prismjs/plugins/file-highlight/prism-file-highlight.min.js"></script>
 <script src="https://unpkg.com/tagin@2.0.2/dist/tagin.min.js"></script>
+<script>
+$(document).ready(function () {
+    $('#validate').attr('disabled', true);
+    
+    $('input[type="text"],textarea').on('keyup', function () {
+    
+        var textarea_value = $("#desc").val();
+        
+        var text_value = $('input[name="Title"]').val();
+        
+        if (textarea_value != '' && text_value != '') {
+            $('#validate').attr('disabled', false);
+        } else {
+            $('#validate').attr('disabled', true);
+        }
+    });
+});
+</script>

@@ -11,12 +11,11 @@ namespace hannahM.Models
         public int story_id { get; set; }
         [Required]
         public string? Title { get; set; }
-        [Required]
         public string? Content { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-
+        public string? temp { get; set; }
         public string? Slug =>
          Title?.Replace(" ", "-").ToLower();
     }   

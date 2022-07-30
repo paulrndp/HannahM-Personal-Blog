@@ -1,0 +1,67 @@
+﻿@model Chapters
+
+<partial name="_Notification" />
+
+<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">@ViewBag.Title</span>
+        <h3 class="page-title">"@Html.DisplayFor(model=>model.Title)"</h3>
+    </div>
+</div>
+@using (Html.BeginForm("EditChapter", "Story", FormMethod.Post))
+{
+    <div class="row">
+        <div class="col-lg-9 col-md-12">
+            <div class="card card-small mb-3">
+                <div class="card-body">
+                    <input asp-for="Title" class="form-control form-control-lg mb-3 text-black" type="text" placeholder="Your Post Title">
+                    <textarea asp-for="Content" class="ckeditor" id="editor1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class='card card-small mb-3'>
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Actions</h6>
+                </div>
+                <div class='card-body p-0'>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex px-3">
+                            <button class="btn btn-sm btn-primary" type="submit">
+                                <i class="material-icons">save</i> Save
+                            </button>
+                            <button id="btnDelete" class="btn btn-sm btn-outline-danger  ml-auto">
+                                <i class="material-icons">delete_sweep</i> Delete
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    CKEDITOR.replace('editor1', {
+        height: 400
+    });
+
+        $(document).ready(function() {
+        $("#btnDelete").click(function() {
+            event.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure want to delete this chapter?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '@Url.ActionLink("chapterDelete", "Story", new RouteValueDictionary(new { id = Model.Id }))';
+                }
+            })
+        });
+    });
+</script>

@@ -28,11 +28,22 @@
     overflow: auto;
     background-color: transparent;
 }
-.list-group {
-    max-height: 750px;
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch;
-}
 ::-webkit-scrollbar {
     display: none;
+}
+.table-responsive {
+    max-height: 650px;
+}
+.table-borderless > tbody > tr > td,
+.table-borderless > tbody > tr > th,
+.table-borderless > tfoot > tr > td,
+.table-borderless > tfoot > tr > th,
+.table-borderless > thead > tr > td,
+.table-borderless > thead > tr > th {
+    border: none;
+}
+.pullright {
+    float: right;
+    margin: 2px;
+    display: flex;
 }

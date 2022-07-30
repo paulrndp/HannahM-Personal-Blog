@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using hannahM.Data;
 
@@ -11,9 +12,11 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220728131332_alter-genre-nullable")]
+    partial class altergenrenullable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,6 +85,7 @@ namespace hannahM.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Content")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDateTime")
@@ -93,9 +97,6 @@ namespace hannahM.Migrations
 
                     b.Property<int>("story_id")
                         .HasColumnType("int");
-
-                    b.Property<string>("temp")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -158,9 +159,6 @@ namespace hannahM.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("temp")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");

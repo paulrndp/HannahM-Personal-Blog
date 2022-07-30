@@ -13,11 +13,10 @@ namespace hannahM.Models
         [Required]
         public string? Desc { get; set; }
         public string? Tags { get; set; }
-        [Required]
         public string? Genre { get; set; }
         public byte[]? Cover { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-
+        public string? temp { get; set; }
         public string? Slug =>
             Title?.Replace(" ","-").ToLower();
     }   

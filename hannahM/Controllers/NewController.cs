@@ -2,6 +2,7 @@
 using hannahM.Models;
 using hannahM.Action;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
@@ -30,9 +31,7 @@ namespace hannahM.Controllers
         public IActionResult StoryPost()
         {
             return View();
-        }
-
-
+        }          
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult BlogPost(Blog postData, string submit)
@@ -123,15 +122,18 @@ namespace hannahM.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> StoryPost(Story obj, List<IFormFile> Cover)
+        public async Task<IActionResult> StoryPost(Story s, List<IFormFile> Cover)
         {
             if (ModelState.IsValid)
             {
+                Chapters chapter = new Chapters();
+                chapter.Title = "Untitled";
+
                 Story story = new Story();
-                story.Title = obj.Title;
-                story.Desc = obj.Desc;
-                story.Tags = obj.Tags;
-                story.Genre = obj.Genre;
+                story.Title = s.Title;
+                story.Desc = s.Desc;
+                story.Tags = s.Tags;
+                story.Genre = s.Genre;
 
                 foreach (var item in Cover)
                 {
@@ -146,11 +148,18 @@ namespace hannahM.Controllers
                 }
                 _db.Stories.Add(story);
                 _db.SaveChanges();
-                TempData["success"] = story.Title + " Successfully Created";
-                return RedirectToAction("StoryPost");
+
+                chapter.story_id = story.Id;
+
+                _db.Chapter.Add(chapter);
+                _db.SaveChanges();
+                TempData["success"] = "New story added.";
+
             }
-            return View(obj);
+
+            return RedirectToAction("MyStory", "Story");
 
         }
+
     }
 }
