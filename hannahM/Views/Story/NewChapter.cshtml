@@ -1,34 +1,60 @@
 ﻿@model Chapters
-
 <partial name="_Notification" />
+<div class="page-header row no-gutters py-4">
+    <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+        <span class="text-uppercase page-subtitle">@ViewBag.Title - adding new chapter</span>
+        <h3 id="output" class="page-title"></h3>
+    </div>
+</div>
+
 @using (Html.BeginForm("NewChapter", "Story", FormMethod.Post))
 {
-    <input name="story_id" asp-for="story_id" type="text" hidden />
+    <input name="story_id" type="text" value="@Context.Request.RouteValues["id"]" hidden/>
     <div class="row">
-        <div class="d-flex align-items-center justify-content-center">
-            <div class="col-8 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-10">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1"> <i class="mdi mdi-lead-pencil"></i></span>
-                                    <input name="Title" type="text" class="form-control text-white col-md-6" value="Untitled part" onclick="this.select()">
-                                </div>
-                            </div>
-                            <div class="col-2">
-                                <button class="btn btn-inverse-success btn-fw pullright" type="submit"><i class="bi bi-card-text"></i> Save</button>
-                            </div>
-                        </div>
-                        <div class="">
-                            <textarea name="Content" class="ckeditor"></textarea>
-                            <script>
-                                CKEDITOR.replace('editor1');
-                            </script>
-                        </div>
-                    </div>
+        <div class="col-lg-9 col-md-12">
+            <div class="card card-small mb-3">
+                <div class="card-body">
+                    <input id="input" name="Title" class="form-control form-control-lg mb-3" type="text" placeholder="Your Post Title">
+                    <textarea name="Content" class="ckeditor" id="editor1"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12">
+            <div class='card card-small mb-3'>
+                <div class="card-header border-bottom">
+                    <h6 class="m-0">Actions</h6>
+                </div>
+                <div class='card-body p-0'>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex px-3">
+                            <button class="btn btn-sm btn-accent ml-auto" type="submit">
+                                <i class="material-icons">file_copy</i> Save
+                            </button>
+                        </li>
+
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 }
+<script>
+    CKEDITOR.replace('editor1', {
+        height: 400
+    });
+
+// IE 9+
+$(function() {
+  var $input = $('#input');
+  var $output = $('#output');
+  $input.on('input', function(event) {
+    var value = $input.val();
+    $output.text(value);
+  });
+  
+  $input.on('change', function(event) {
+  	$output2.text($input.val());
+  });
+});
+
+</script>

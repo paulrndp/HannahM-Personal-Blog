@@ -29,18 +29,12 @@
                         <a class="text-fiord-blue" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@Html.DisplayFor(x => item.Title)</a>
                     </h5>
                     <div class="d-flex mb-3">
-                        <small class="text-muted"><i class="fas fa-list mr-1"></i>3 Part</small>&ensp;
+                        <small class="text-muted"><i class="fas fa-list mr-1"></i></small>&ensp;
                         <small class="text-muted"><i class="fas fa-eye mr-1">&nbsp;</i>1,234 Reads</small>&ensp;
                     </div>
                     <p class="card-text text-muted">@Html.Raw(item.Desc.Substring(0, Math.Min(item.Desc.Length, 250)))...</p>
                     <div class="d-flex">
                         <div class="">
-                            @*                            <a class="btn btn-sm btn-white mb-2">
-                        <i class="fas fa-edit"></i> Add Chapter
-                        </a>
-                        <a class="btn btn-sm btn-white mb-2" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
-                        <i class="fas fa-edit"></i> Edit
-                        </a>*@
                             <ul class="navbar-nav flex-row ">
                                 <li class="nav-item dropdown notifications">
                                     <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -49,33 +43,19 @@
                                         </div>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item border-bottom" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
-                                            <div class="notification__icon-wrapper">
-                                                <div class="notification__icon">
-                                                    <i class="material-icons">edit</i>
-                                                </div>
-                                            </div>
-                                            <div class="notification__content">
-                                                <span class="notification__category text-danger">Story Details</span>
-                                                <p>
-                                                    Edit Title, Description and Cover
-                                                </p>
-                                            </div>
-                                        </a>
-                                        <a class="dropdown-item border-bottom" asp-controller="Story" asp-action="Chapters" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
+                                        <a class="dropdown-item" asp-controller="Story" asp-action="Chapters" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
                                             <div class="notification__icon-wrapper">
                                                 <div class="notification__icon">
                                                     <i class="material-icons">list</i>
                                                 </div>
                                             </div>
                                             <div class="notification__content">
-                                                <span class="notification__category text-danger">Chapter</span>
+                                                <span class="notification__category text-primary">Chapters</span>
                                                 <p>
                                                     Add, Edit, Delete Chapter
                                                 </p>
                                             </div>
                                         </a>
-
                                     </div>
                                 </li>
                             </ul>
@@ -87,83 +67,3 @@
         </div>
     }
 </div>
-@*
-        <style>
-        .defaultImg {
-        width: 100%;
-        height: 40vh;
-        object-fit: cover;
-        }
-
-        .dropdown-menu > li > a:hover {
-        background-image: none;
-        background-color: red;
-        }
-        </style>
-
-        <div class="row">
-        @foreach (var item in Model)
-        {
-        <div class="col-6">
-        <div class="mb-3">
-        <div class="card">
-        <div class="row no-gutters">
-        <div class="col-sm-5">
-        @if (item.Cover != null && !String.IsNullOrEmpty(Convert.ToBase64String(item.Cover)))
-        {
-        <img class="card-img defaultImg" src="data:image/jpg;base64,@Convert.ToBase64String(item.Cover)" alt="Suresh Dasari Card">
-        }
-        else
-        {
-        <img id="img-container" class="newbtn img-fluid defaultImg" src="//upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
-        }
-        </div>
-        <div class="col-sm-7">
-        <div class="card-body">
-        <h3 class="card-title">@Html.DisplayFor(x => item.Title)</h3>
-        <p class="card-text text-muted">@Html.Raw(item.Desc.Substring(0, Math.Min(item.Desc.Length, 250)))...</p>
-        <p class="card-text text-muted"><i class="bi bi-list-ul"></i> 3 parts</p>
-        <p class="card-text text-muted"><i class="bi bi-eye-fill"></i> 723 Reads</p>
-
-        <div class="dropdown-divider"></div>
-        <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item dropdown border-left">
-        <a class="btn btn-info pullright" id="notificationDropdown" href="#" data-bs-toggle="dropdown">
-        <i class="bi bi-sliders"></i> Manage <i class="bi bi-caret-down-fill"></i>
-        <span class="count bg-danger"></span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="notificationDropdown">
-        <a class="dropdown-item preview-item" asp-controller="Story" asp-action="Details" asp-route-id="@item.Id">
-        <div class="preview-thumbnail">
-        <div class="preview-icon bg-dark rounded-circle">
-        <i class="mdi mdi-calendar text-success"></i>
-        </div>
-        </div>
-        <div class="preview-item-content">
-        <p class="preview-subject mb-1 text-light pe-auto">Story Details</p>
-        <p class="text-muted ellipsis mb-0"> Edit Title, Description and Cover </p>
-        </div>
-        </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item preview-item" asp-controller="Story" asp-action="Chapters" asp-route-id="@item.Id">
-        <div class="preview-thumbnail">
-        <div class="preview-icon bg-dark rounded-circle">
-        <i class="mdi mdi-settings text-danger"></i>
-        </div>
-        </div>
-        <div class="preview-item-content">
-        <p class="preview-subject mb-1 text-light">Chapters</p>
-        <p class="text-muted ellipsis mb-0"> Add Chapter or Edit </p>
-        </div>
-        </a>
-        </div>
-        </li>
-        </ul>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        </div>
-        }
-        </div>*@

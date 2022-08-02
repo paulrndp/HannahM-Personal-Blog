@@ -126,9 +126,6 @@ namespace hannahM.Controllers
         {
             if (ModelState.IsValid)
             {
-                Chapters chapter = new Chapters();
-                chapter.Title = "Untitled";
-
                 Story story = new Story();
                 story.Title = s.Title;
                 story.Desc = s.Desc;
@@ -148,15 +145,14 @@ namespace hannahM.Controllers
                 }
                 _db.Stories.Add(story);
                 _db.SaveChanges();
-
-                chapter.story_id = story.Id;
-
-                _db.Chapter.Add(chapter);
-                _db.SaveChanges();
                 TempData["success"] = "New story added.";
 
             }
-
+            else
+            {
+                TempData["error"] = "There was an error submitting this form.";
+                return RedirectToAction("StoryPost", s);
+            }
             return RedirectToAction("MyStory", "Story");
 
         }

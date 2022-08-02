@@ -3,6 +3,7 @@ using hannahM.Models;
 using hannahM.Action;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace hannahM.Controllers
 {
@@ -19,7 +20,7 @@ namespace hannahM.Controllers
         {
             var status = _db.Stories.Where(x => x.Id == id).Select(stats => stats).Single();
             return View("Edit", status);
-        }        
+        }
         public IActionResult EditChapter(int? id)
         {
             var storyID = _db.Chapter.Where(x => x.Id == id).Select(stats => stats.story_id).Single();
@@ -28,28 +29,17 @@ namespace hannahM.Controllers
             var status = _db.Chapter.Where(x => x.Id == id).Select(stats => stats).Single();
             return View("EditChapter", status);
         }
-        public IActionResult NewChapter(int? id)
+        public IActionResult NewChapter(int id)
         {
-            var find = _db.Chapter.Find(id);
-            if (find == null)
-            {
-                return NotFound();
-            }
-            return View(find);
+            ViewBag.Title = _db.Stories.Where(x => x.Id == id).Select(stats => stats.Title).Single();
+            return View();
         }
         public IActionResult Chapters(int? id)
         {
-
-            var getId = _db.Chapter.Where(x => x.story_id == id).Select(stats => stats.story_id).SingleOrDefault();
-            int storyId = Convert.ToInt32(getId);
-
-            ViewBag.Title = _db.Stories.Where(x => x.Id == storyId).Select(stats => stats.Title).SingleOrDefault();
-            ViewBag.Desc = _db.Stories.Where(x => x.Id == storyId).Select(stats => stats.Desc).SingleOrDefault();
-            ViewBag.Cover = _db.Stories.Where(x => x.Id == storyId).Select(stats => stats.Cover).SingleOrDefault();
-
             var query = from s in _db.Stories
-                        join c in _db.Chapter on s.Id equals c.story_id into x from c in x.DefaultIfEmpty()
-                        where c.story_id == id
+                        join c in _db.Chapter on s.Id equals c.story_id into x
+                        from c in x.DefaultIfEmpty()
+                        where s.Id == id
                         select new StoryViewModel
                         {
                             stories = s,
@@ -63,7 +53,7 @@ namespace hannahM.Controllers
             var status = _db.Stories.Where(x => x.Id == id).Select(stats => stats).Single();
             return View("Details", status);
         }
-        public IActionResult MyStory() 
+        public IActionResult MyStory()
         {
             var myStory = _db.Stories.Select(all => all).ToList();
             return View("MyStory", myStory);
@@ -141,13 +131,16 @@ namespace hannahM.Controllers
                 chptrs.Title = obj.Title;
                 chptrs.Content = obj.Content;
                 chptrs.story_id = obj.story_id;
-                ;
                 _db.Chapter.Add(chptrs);
                 _db.SaveChanges();
-                TempData["success"] = "Successfully Created ";
-                return RedirectToAction("MyStory");
+                TempData["success"] = "New Chapter Added.";
+                return RedirectToAction("Chapters", new { id = obj.Id });
             }
-            return View(obj);
+            else
+            {
+                TempData["error"] = "There was an error submitting this form.";
+                return RedirectToAction("NewChapter", obj);
+            }
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -161,7 +154,7 @@ namespace hannahM.Controllers
                 _db.Entry(obj).Property("story_id").IsModified = false;
                 _db.Entry(obj).Property("CreatedDateTime").IsModified = false; ;
                 _db.SaveChanges();
-                TempData["success"] = "'"+obj.Title+"'"+" Successfully Updated! ";
+                TempData["success"] = "'" + obj.Title + "'" + " Successfully Updated! ";
                 return RedirectToAction("EditChapter");
             }
             return View(obj);
@@ -177,6 +170,16 @@ namespace hannahM.Controllers
             _db.SaveChanges();
             TempData["success"] = "Chapter successfully deleted.";
             return RedirectToAction("Chapters");
+        }
+
+        public IActionResult storyDelete(int? id)
+        {
+            _db.RemoveRange(_db.Stories.Where(c => c.Id == id));
+            _db.RemoveRange(_db.Chapter.Where(c => c.story_id == id));
+            _db.SaveChanges();
+
+            TempData["success"] = "Story successfully deleted.";
+            return RedirectToAction("MyStory");
         }
     }
 }
