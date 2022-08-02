@@ -67,16 +67,14 @@
                                 <div class="card stretch-card bg-transparent">
                                     @if (Model.Cover != null && !String.IsNullOrEmpty(Convert.ToBase64String(Model.Cover)))
                                     {
-                                        <img id="img-container" class="newbtn img-fluid" src="data:image/jpg;base64,@Convert.ToBase64String(Model.Cover)">
+                                        <img id="img-profile" class="newbtn img-fluid" src="data:image/jpg;base64,@Convert.ToBase64String(Model.Cover)">
                                         <input id="pic" type="file" name="Cover" onchange="previewFile(this);">
                                     }
                                     else
                                     {
-                                        <img id="img-container" class="newbtn img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
+                                        <img id="img-profile" class="newbtn img-fluid" src="https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg">
                                         <input id="pic" type="file" onchange="previewFile(this);">
                                     }
-
-
                                 </div>
                                 <p class="card-description"> Stories with a cover image get 23x more reads than ones without </p>
                                 <p class="card-description"> Must be in PNG, GIF, or JPG format, smaller than 2MB. Recommended cover dimensions: <code>512x800</code> pixels </p>

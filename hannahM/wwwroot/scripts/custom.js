@@ -15,6 +15,18 @@ function previewFile(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+function profilePreview(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#img-profile')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
 //tags
 const tagin = new Tagin(document.querySelector('.tagin'), {
     enter: true

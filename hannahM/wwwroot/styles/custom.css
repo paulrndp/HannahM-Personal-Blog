@@ -10,6 +10,25 @@
     object-fit: cover;
     height: 390px;
 }
+#profile-container {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    #profile-container img {
+        height: 100%;
+        width: auto;
+    }
 
 .txtCustom > input[type="text"], textarea {
     background-color: white;

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using hannahM.Data;
 
@@ -11,9 +12,11 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220802075355_alter-acc-profile-column")]
+    partial class alteraccprofilecolumn
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,7 +55,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("hannahM.Models.Blog", b =>
@@ -82,7 +85,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blog", (string)null);
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("hannahM.Models.Chapters", b =>
@@ -111,7 +114,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chapter", (string)null);
+                    b.ToTable("Chapter");
                 });
 
             modelBuilder.Entity("hannahM.Models.RandomThoughts", b =>
@@ -141,7 +144,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Random", (string)null);
+                    b.ToTable("Random");
                 });
 
             modelBuilder.Entity("hannahM.Models.Story", b =>
@@ -177,7 +180,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stories", (string)null);
+                    b.ToTable("Stories");
                 });
 #pragma warning restore 612, 618
         }
