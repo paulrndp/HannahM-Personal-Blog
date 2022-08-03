@@ -34,13 +34,14 @@ namespace hannahM.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Firstname")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Profile")
@@ -52,7 +53,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Accounts", (string)null);
+                    b.ToTable("Accounts");
                 });
 
             modelBuilder.Entity("hannahM.Models.Blog", b =>
@@ -82,7 +83,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Blog", (string)null);
+                    b.ToTable("Blog");
                 });
 
             modelBuilder.Entity("hannahM.Models.Chapters", b =>
@@ -111,7 +112,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Chapter", (string)null);
+                    b.ToTable("Chapter");
                 });
 
             modelBuilder.Entity("hannahM.Models.RandomThoughts", b =>
@@ -141,7 +142,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Random", (string)null);
+                    b.ToTable("Random");
                 });
 
             modelBuilder.Entity("hannahM.Models.Story", b =>
@@ -177,7 +178,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stories", (string)null);
+                    b.ToTable("Stories");
                 });
 #pragma warning restore 612, 618
         }

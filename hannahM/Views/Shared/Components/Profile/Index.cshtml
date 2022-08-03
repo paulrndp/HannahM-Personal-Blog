@@ -1,0 +1,28 @@
+﻿@model IEnumerable<Account>
+
+@foreach (var item in Model)
+{
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-nowrap px-3 profile-container" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            @if (item.Profile != null && !String.IsNullOrEmpty(Convert.ToBase64String(item.Profile)))
+            {
+                <img class="user-avatar rounded-circle mr-2" src="data:image/jpg;base64,@Convert.ToBase64String(item.Profile)" alt="User Avatar">
+
+            }
+            else
+            {
+                <img class="user-avatar rounded-circle mr-2" src="//www.updatedcelebrities.com/wp-content/uploads/2022/02/360_F_212247400_2as9Kdw9LjWHLpNpFRB4geIPRfJfdQiV-3.jpg" alt="User Avatar">
+            }
+            <span class="d-none d-md-inline-block">@item.Firstname @item.LastName</span>
+        </a>
+        <div class="dropdown-menu dropdown-menu-small">
+            <a class="dropdown-item" href="@Url.Action("Index","Account", new {id = 1})">
+                <i class="material-icons">&#xE7FD;</i> Profile
+            </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item text-danger" href="#">
+                <i class="material-icons text-danger">&#xE879;</i> Logout
+            </a>
+        </div>
+    </li>
+}

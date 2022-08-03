@@ -5,14 +5,14 @@
 namespace hannahM.Migrations
 {
     /// <inheritdoc />
-    public partial class alterchaptercontentnullable : Migration
+    public partial class alterpassremoverequired : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Content",
-                table: "Chapter",
+                name: "Password",
+                table: "Accounts",
                 type: "nvarchar(max)",
                 nullable: true,
                 oldClrType: typeof(string),
@@ -23,8 +23,8 @@ namespace hannahM.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AlterColumn<string>(
-                name: "Content",
-                table: "Chapter",
+                name: "Password",
+                table: "Accounts",
                 type: "nvarchar(max)",
                 nullable: false,
                 defaultValue: "",

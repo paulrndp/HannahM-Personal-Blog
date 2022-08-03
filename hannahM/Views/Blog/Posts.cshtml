@@ -5,9 +5,14 @@
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">Draft and Published Post</span>
-        <h3 class="page-title">Blog Posts</h3>
+        <div class="">
+            <h3 class="page-title">
+                Blog Posts <a class="btn btn-add text-success" href="@Url.Action("BlogPost","New")"> <i class="fa fa-plus-circle"></i> New</a>
+            </h3>
+        </div>
     </div>
 </div>
+
 <partial name="_Notification" />
 <div class="row">
     @foreach (var item in Model)

@@ -29,7 +29,7 @@ namespace hannahM.Controllers
             var status = _db.Chapter.Where(x => x.Id == id).Select(stats => stats).Single();
             return View("EditChapter", status);
         }
-        public IActionResult NewChapter(int id)
+        public IActionResult NewChapter(int? id)
         {
             ViewBag.Title = _db.Stories.Where(x => x.Id == id).Select(stats => stats.Title).Single();
             return View();
@@ -67,7 +67,7 @@ namespace hannahM.Controllers
             {
                 if (ModelState.IsValid)
                 {
-
+                    
                     _db.Entry(obj).State = EntityState.Modified;
                     _db.Entry(obj).Property("Title").IsModified = true;
                     _db.Entry(obj).Property("Desc").IsModified = true;
@@ -76,7 +76,7 @@ namespace hannahM.Controllers
                     _db.Entry(obj).Property("Cover").IsModified = false;
                     _db.SaveChanges();
                     TempData["success"] = "Successfully Updated! ";
-                    return RedirectToAction("Edit", obj);
+                    return RedirectToAction("Edit");
 
                 }
                 else
@@ -84,7 +84,7 @@ namespace hannahM.Controllers
                     TempData["error"] = "There was an error submitting this form.";
 
                 }
-                return RedirectToAction("Edit", obj);
+                return RedirectToAction("Edit");
 
             }
             else
@@ -107,17 +107,16 @@ namespace hannahM.Controllers
                             }
                         }
                     }
-                    _db.Stories.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully Updated! ";
-                    return RedirectToAction("Edit", obj);
+                    return RedirectToAction("Edit");
 
                 }
                 else
                 {
                     TempData["error"] = "There was an error submitting this form.";
                 }
-                return RedirectToAction("Edit", obj);
+                return RedirectToAction("Edit");
 
             }
         }

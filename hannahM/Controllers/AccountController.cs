@@ -15,25 +15,58 @@ namespace hannahM.Controllers
         }
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(int? id)
         {
-            IEnumerable<Account> acc = _db.Accounts;
-            return View(acc);
+            var status = _db.Accounts.Where(x => x.Id == id).Select(stats => stats).First();
+            return View("Index", status);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(Account obj, List<IFormFile> Profile)
         {
-
-            if (ModelState.IsValid)
+            if (Profile.Count == 0)
             {
-                Account acc = new Account();
-                acc.Firstname = obj.Firstname;
-                acc.LastName = obj.LastName;
-                acc.Username = obj.Username;
-                acc.Password = obj.Password;
-                acc.Desc = obj.Desc;
+                _db.Entry(obj).State = EntityState.Modified;
+                _db.Entry(obj).Property("Username").IsModified = true;
+
+                if (obj.Password == null)
+                {
+                    _db.Entry(obj).Property("Password").IsModified = false;
+                }
+                else
+                    _db.Entry(obj).Property("Password").IsModified = true;
+
+                _db.Entry(obj).Property("Firstname").IsModified = true;
+                _db.Entry(obj).Property("LastName").IsModified = true;
+                _db.Entry(obj).Property("Desc").IsModified = true;
+                _db.Entry(obj).Property("Profile").IsModified = false;
+                _db.SaveChanges();
+                TempData["success"] = "Successfully Updated!";
+
+                return RedirectToAction("Index");
+
+                //else
+                //{
+                //    TempData["error"] = "There was an error submitting this form.";
+                //    return RedirectToAction("Index");
+                //}
+            }
+            else
+            {
+
+                _db.Entry(obj).State = EntityState.Modified;
+                _db.Entry(obj).Property("Username").IsModified = true;
+                if (obj.Password == null)
+                {
+                    _db.Entry(obj).Property("Password").IsModified = false;
+
+                }
+                else
+                    _db.Entry(obj).Property("Password").IsModified = true;
+                _db.Entry(obj).Property("Firstname").IsModified = true;
+                _db.Entry(obj).Property("LastName").IsModified = true;
+                _db.Entry(obj).Property("Desc").IsModified = true;
 
                 foreach (var item in Profile)
                 {
@@ -42,21 +75,23 @@ namespace hannahM.Controllers
                         using (var stream = new MemoryStream())
                         {
                             await item.CopyToAsync(stream);
-                            acc.Profile = stream.ToArray();
+                            obj.Profile = stream.ToArray();
                         }
                     }
                 }
-                _db.Accounts.Update(acc);
+                _db.Accounts.Update(obj);
                 _db.SaveChanges();
-                TempData["success"] = "Profile successfully updated.";
+                TempData["success"] = "Successfully Updated!";
+
+                return RedirectToAction("Index");
+
+                //else
+                //{
+                //    TempData["error"] = "There was an error submitting this form.";
+                //    return RedirectToAction("Index");
+                //}
 
             }
-            else
-            {
-                TempData["error"] = "There was an error submitting this form.";
-                return RedirectToAction("Index", obj);
-            }
-            return RedirectToAction("Index");
         }
 
     }

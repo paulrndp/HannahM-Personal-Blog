@@ -15,6 +15,10 @@ function previewFile(input) {
         reader.readAsDataURL(input.files[0]);
     }
 }
+
+$('.profile-btn').bind("click", function () {
+    $('#profile').click();
+});
 function profilePreview(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();

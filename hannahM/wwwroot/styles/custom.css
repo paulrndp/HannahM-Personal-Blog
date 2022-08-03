@@ -10,6 +10,15 @@
     object-fit: cover;
     height: 390px;
 }
+
+#profile {
+    display: none;
+}
+
+.profile-btn {
+    cursor: pointer;
+}
+
 #profile-container {
     width: 200px;
     height: 200px;
@@ -27,7 +36,27 @@
 
     #profile-container img {
         height: 100%;
-        width: auto;
+        width: 210px;
+        object-fit: cover;
+    }
+
+.profile-container {
+    position: relative;
+    overflow: hidden;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .profile-container img {
+        height: 45px;
+        width: 50px;
+        object-fit: cover;
     }
 
 .txtCustom > input[type="text"], textarea {
@@ -42,17 +71,21 @@
     background-color: #2A3038;
     box-shadow: none
 }
+
 .ex3 {
     height: 650px;
     overflow: auto;
     background-color: transparent;
 }
+
 ::-webkit-scrollbar {
     display: none;
 }
+
 .table-responsive {
     max-height: 650px;
 }
+
 .table-borderless > tbody > tr > td,
 .table-borderless > tbody > tr > th,
 .table-borderless > tfoot > tr > td,
@@ -61,8 +94,13 @@
 .table-borderless > thead > tr > th {
     border: none;
 }
+
 .pullright {
     float: right;
     margin: 2px;
     display: flex;
+}
+.btn-add {
+    position: absolute;
+    max-height: 100px;
 }
