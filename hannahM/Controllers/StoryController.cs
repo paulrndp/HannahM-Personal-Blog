@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class StoryController : Controller
     {
         private readonly ApplicationDbContext _db;

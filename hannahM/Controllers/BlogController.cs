@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class BlogController : Controller
     {
         private readonly ApplicationDbContext _db;

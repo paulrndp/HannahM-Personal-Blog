@@ -6,8 +6,7 @@ using hannahM.Action;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
-
+    [SessionExpire]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -36,6 +35,11 @@ namespace hannahM.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public ActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Index", "Main");
         }
     }
 }

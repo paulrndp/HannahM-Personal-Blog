@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class RandomController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -14,7 +14,7 @@ namespace hannahM.Controllers
         {
             _db = db;
         }
-        //VIEW
+
         public IActionResult Create()
         {
             return View();
@@ -58,7 +58,7 @@ namespace hannahM.Controllers
 
         }
 
-        //POST
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(RandomThoughts postData, string submit)

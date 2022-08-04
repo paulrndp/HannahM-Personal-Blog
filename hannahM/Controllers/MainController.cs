@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
+
     public class MainController : Controller
     {
 
@@ -107,11 +108,10 @@ namespace hannahM.Controllers
             {
                 HttpContext.Session.SetString("Id", accnt.Id.ToString());
                 HttpContext.Session.SetString("Username", accnt.Username.ToString());
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Admin");
             }
             return View();
 
         }
-
     }
 }

@@ -3,8 +3,10 @@ using hannahM.Models;
 using hannahM.Action;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+
 namespace hannahM.Controllers
 {
+    [SessionExpire]
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _db;
