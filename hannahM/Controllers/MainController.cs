@@ -54,9 +54,24 @@ namespace hannahM.Controllers
         }
         public IActionResult Blog_post_read(int? id)
         {
+            var next = (from a in _db.Blog
+                        where a.Id > id
+                        orderby a.Id
+                        select a.Id).FirstOrDefault();
+
+            var prev = (from a in _db.Blog
+                        where a.Id < id
+                        orderby a.Id
+                        select a.Id).FirstOrDefault();
+
+            ViewBag.Next = next;
+            ViewBag.Prev = prev;
+            
             var result = _db.Blog.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Blog_post_read", result);
+
         }
+
         public IActionResult Random_post_read(int? id)
         {
             var result = _db.Random.Where(x => x.Id == id).Select(all => all).ToList();

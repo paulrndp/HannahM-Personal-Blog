@@ -15,7 +15,8 @@
                 <div class="card" style="text-align:center;border:none;">
                     <div class="card-body">
                         <h6 class="short">Random Thoughts</h6>
-                        <h5 class="card-title" style="text-align:center;">@item.Title</h5>
+                        @*<h5 class="card-title" style="text-align:center;">@item.Title</h5>*@
+                         <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>
                         <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                         <div><p class="text-muted" style="text-align: center;">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))... </p></div>
                         <a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font"> Read More</a>
