@@ -12,8 +12,8 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220803071434_addDb")]
-    partial class addDb
+    [Migration("20220809115943_AddToDb")]
+    partial class AddToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -45,7 +45,6 @@ namespace hannahM.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<byte[]>("Profile")

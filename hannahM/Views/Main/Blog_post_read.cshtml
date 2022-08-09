@@ -8,8 +8,8 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
-<div>@ViewBag.Next</div>
-<div>@ViewBag.Prev</div>
+<input id="nextVal" type="text" value="@ViewBag.Next" hidden/>
+<input id="prevVal" type="text" value="@ViewBag.Prev" hidden/>
 <body>
     <div class="container">
         <div class="row">
@@ -23,20 +23,10 @@
                             <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                             <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
                         </div>
-                            if (ViewBag.Next == 0)
-                            {
-                            <div class="text-center">
-                                <a class="btn mb-3 hover-underline-animation disabled" style="float:right;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Next" asp-route-slug="@item.Slug"> Next <i class="bi bi-arrow-90deg-right"></i></a>
-                                <a class="btn mb-3 hover-underline-animation" style="float:left;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Prev" asp-route-slug="@item.Slug"> <i class="bi bi-arrow-90deg-left"></i> Back </a>
-                            </div>
-                            }
-                            else 
-                            {
-                            <div class="text-center">
-                            <a class="btn mb-3 hover-underline-animation" style="float:right;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Next" asp-route-slug="@item.Slug"> Next <i class="bi bi-arrow-90deg-right"></i></a>
-                            <a class="btn mb-3 hover-underline-animation" style="float:left;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Prev" asp-route-slug="@item.Slug"> <i class="bi bi-arrow-90deg-left"></i> Back </a>
-                            </div>
-                            }                            
+                        <div class="text-center">
+                            <a id="next" class="btn mb-3 hover-underline-animation default-font" style="float:right;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Next" asp-route-slug="@item.Slug"> Next <i class="bi bi-arrow-90deg-right"></i></a>
+                            <a id="prev" class="btn mb-3 hover-underline-animation default-font" style="float:left;" asp-action="Blog_post_read" asp-route-id="@ViewBag.Prev" asp-route-slug="@item.Slug"> <i class="bi bi-arrow-90deg-left"></i> Back </a>
+                        </div>
                     }
                 </div>
             </div>
@@ -44,7 +34,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Comments</h5>
-                        <h5 class="card-title">@Html.Raw(Context.Request.RouteValues["id"])</h5>
+                        <h5 class="card-title"></h5>
                         <div class="fb-comments" runat="server" data-href="https://localhost:44325/main/blog_post_read/1/just-a-sweet-message-for-paul" data-width="" data-numposts="5"></div>
                     </div>
                 </div>
@@ -52,3 +42,14 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function() {
+        if ($("#nextVal").val() === '0') {
+                $("#next").addClass("disabled");
+        }
+        if ($("#prevVal").val() === '0') {
+                $("#prev").addClass("disabled");
+
+        }
+    });
+</script>

@@ -5,7 +5,8 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
-
+<input id="nextVal" type="text" value="@ViewBag.Next" hidden/>
+<input id="prevVal" type="text" value="@ViewBag.Prev" hidden/>
 <body>
     <div class="container">
         <div class="row">
@@ -18,6 +19,10 @@
                             <h5 class="card-title" style="text-align:center;">@item.Title</h5>
                             <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                             <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
+                        </div>
+                        <div class="text-center">
+                            <a id="next" class="btn mb-3 hover-underline-animation default-font" style="float:right;" asp-action="Random_post_read" asp-route-id="@ViewBag.Next" asp-route-slug="@item.Slug"> Next <i class="bi bi-arrow-90deg-right"></i></a>
+                            <a id="prev" class="btn mb-3 hover-underline-animation default-font" style="float:left;" asp-action="Random_post_read" asp-route-id="@ViewBag.Prev" asp-route-slug="@item.Slug"> <i class="bi bi-arrow-90deg-left"></i> Back </a>
                         </div>
                     }
                 </div>
@@ -33,5 +38,15 @@
         </div>
     </div>
 </body>
+<script>
+    $(document).ready(function() {
+        if ($("#nextVal").val() === '0') {
+                $("#next").addClass("disabled");
+        }
+        if ($("#prevVal").val() === '0') {
+                $("#prev").addClass("disabled");
 
+        }
+    });
+</script>
 

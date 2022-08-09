@@ -8,6 +8,8 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
+<input id="min" type="text" value="@ViewBag.min" hidden/>
+<input id="max" type="text" value="@ViewBag.max" hidden/>
 <body>
     <div class="container">
         <div class="row">
@@ -20,9 +22,12 @@
                             <h5 class="card-title" style="text-align:center;">@item.Title</h5>
                             <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                             <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
-                        </div>                        
+                        </div>
+                        <div class="text-center">
+                            <a id="next" class="btn mb-3 hover-underline-animation default-font" style="float:right;" asp-action="Read" asp-route-id="@ViewBag.Next" asp-route-slug="@item.Slug"> Next <i class="bi bi-arrow-90deg-right"></i></a>
+                            <a id="prev" class="btn mb-3 hover-underline-animation default-font" style="float:left;" asp-action="Read" asp-route-id="@ViewBag.Prev" asp-route-slug="@item.Slug"> <i class="bi bi-arrow-90deg-left"></i> Back </a>
+                        </div>
                     }
-
                 </div>
             </div>
             <div class="col-lg-5">
@@ -32,9 +37,26 @@
                         <div id="vcomment"></div>
                     </div>
                 </div>
+                <input id="current" type="text" value="@Context.Request.RouteValues["id"]" hidden/>
             </div>
-        </div>
+
+        </div> 
     </div>
 </body>
+<script>
+    $(document).ready(function() {
+        var min = $("#min").val();
+        var max = $("#max").val();
+        var current = $("#current").val();
+
+        if (min === current) {
+            $("#prev").addClass("disabled");
+        }
+        if (max === current) {
+            $("#next").addClass("disabled");
+
+        }
+    });
+</script>
 
 

@@ -20,7 +20,7 @@
         <div class="col-lg-4">
             <div class="card card-small card-post mb-4">
                 <div class="card-body">
-                    <h5 class="card-title"><a asp-controller="Blog" asp-action="Edit" asp-route-id="@item.Id" class="text-fiord-blue">@item.Title</a></h5>
+                    <h5 class="card-title"><a asp-controller="Random" asp-action="Edit" asp-route-id="@item.Id" class="text-fiord-blue">@item.Title</a></h5>
                     <p class="card-text text-muted">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))...</p>
 
                 </div>

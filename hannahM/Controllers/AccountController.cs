@@ -47,12 +47,6 @@ namespace hannahM.Controllers
                 TempData["success"] = "Successfully Updated!";
 
                 return RedirectToAction("Index");
-
-                //else
-                //{
-                //    TempData["error"] = "There was an error submitting this form.";
-                //    return RedirectToAction("Index");
-                //}
             }
             else
             {
@@ -87,11 +81,6 @@ namespace hannahM.Controllers
 
                 return RedirectToAction("Index");
 
-                //else
-                //{
-                //    TempData["error"] = "There was an error submitting this form.";
-                //    return RedirectToAction("Index");
-                //}
 
             }
         }

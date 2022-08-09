@@ -59,14 +59,10 @@ namespace hannahM.Controllers
                         orderby a.Id
                         select a.Id).FirstOrDefault();
 
-            var prev = (from a in _db.Blog
-                        where a.Id < id
-                        orderby a.Id
-                        select a.Id).FirstOrDefault();
-
             ViewBag.Next = next;
-            ViewBag.Prev = prev;
-            
+            ViewBag.Prev = id - 1;
+
+
             var result = _db.Blog.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Blog_post_read", result);
 
@@ -74,6 +70,14 @@ namespace hannahM.Controllers
 
         public IActionResult Random_post_read(int? id)
         {
+            var next = (from a in _db.Random
+                        where a.Id > id
+                        orderby a.Id
+                        select a.Id).FirstOrDefault();
+
+            ViewBag.Next = next;
+            ViewBag.Prev = id - 1;
+
             var result = _db.Random.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Random_post_read", result);
         }
@@ -93,6 +97,10 @@ namespace hannahM.Controllers
             ViewBag.rndm = randomList.OrderByDescending(x => x.Id).ToList();
             ViewBag.blg = blogList.OrderByDescending(x => x.Id).ToList();
 
+            ViewBag.count = (from c in _db.Chapter
+                             where c.story_id == id
+                             select c).Count();
+
             var query = from s in _db.Stories
                         join c in _db.Chapter on s.Id equals c.story_id into x
                         from c in x.DefaultIfEmpty()
@@ -104,16 +112,30 @@ namespace hannahM.Controllers
 
         public IActionResult Read(int? id)
         {
-
             var storyID = _db.Chapter.Where(x => x.Id == id).Select(stats => stats.story_id).Single();
             ViewBag.title = _db.Stories.Where(x => x.Id == Convert.ToInt32(storyID)).Select(stats => stats.Title).Single();
+
+            ViewBag.min = (from c in _db.Chapter
+                           where c.story_id == Convert.ToInt32(storyID)
+                           select c).Min(c => c.Id);            
+            
+            ViewBag.max = (from c in _db.Chapter
+                           where c.story_id == Convert.ToInt32(storyID)
+                           select c).Max(c => c.Id);
+
+            var next = (from a in _db.Chapter
+                        where a.story_id == Convert.ToInt32(storyID) && a.Id > id
+                        orderby a.Id
+                        select a.Id).FirstOrDefault();
+
+
+            ViewBag.Next = next;
+            ViewBag.Prev = id - 1;
 
             var result = _db.Chapter.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Read", result);
 
-
         }
-
         [HttpPost]
         public IActionResult Login(Account accnt)
         {

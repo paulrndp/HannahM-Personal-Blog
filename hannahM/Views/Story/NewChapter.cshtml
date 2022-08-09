@@ -3,7 +3,11 @@
 <div class="page-header row no-gutters py-4">
     <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
         <span class="text-uppercase page-subtitle">@ViewBag.Title - adding new chapter</span>
-        <h3 id="output" class="page-title"></h3>
+        <div class="">
+            <h3 id="output" class="page-title">
+               Untitled <a class="btn btn-add text-dark" onclick="window.history.go(-1); return false;"> <i class="fa fa-arrow-circle-left"></i> Back</a>
+            </h3>
+        </div>
     </div>
 </div>
 
@@ -29,7 +33,8 @@
                         <li class="list-group-item d-flex px-3">
                             <button class="btn btn-sm btn-accent ml-auto" type="submit">
                                 <i class="material-icons">file_copy</i> Save
-                            </button>
+                            </button>                            
+
                         </li>
 
                     </ul>
