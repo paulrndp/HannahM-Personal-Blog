@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Blog>
+﻿@model IEnumerable<Posts>
 @using Microsoft.AspNetCore.Http.Extensions;
 @using Microsoft.AspNetCore.Mvc;
 @using System.Web;
@@ -8,8 +8,9 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
-<input id="nextVal" type="text" value="@ViewBag.Next" hidden/>
-<input id="prevVal" type="text" value="@ViewBag.Prev" hidden/>
+<input type="text" value="@ViewBag.test" />
+<input id="nextVal" type="text" value="@ViewBag.Next" hidden />
+<input id="prevVal" type="text" value="@ViewBag.Prev" hidden />
 <body>
     <div class="container">
         <div class="row">
@@ -18,7 +19,7 @@
                     @foreach (var item in Model)
                     {
                         <div class="card-body">
-                            <h6 class="short">Blog</h6>
+                            <h6 class="short">Post</h6>
                             <h5 class="card-title" style="text-align:center;">@item.Title</h5>
                             <pre class="card-text text-muted" style="text-align:center;">Posted on @item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                             <div style="text-align:justify;"><p class="text-muted">@Html.Raw(item.Content)</p></div>
@@ -35,7 +36,7 @@
                     <div class="card-body">
                         <h5 class="card-title">Comments</h5>
                         <h5 class="card-title"></h5>
-                        <div class="fb-comments" runat="server" data-href="https://localhost:44325/main/blog_post_read/1/just-a-sweet-message-for-paul" data-width="" data-numposts="5"></div>
+                        @*<div class="fb-comments" runat="server" data-href="https://localhost:44325/main/blog_post_read/1/just-a-sweet-message-for-paul" data-width="" data-numposts="5"></div>*@
                     </div>
                 </div>
             </div>
@@ -45,11 +46,10 @@
 <script>
     $(document).ready(function() {
         if ($("#nextVal").val() === '0') {
-                $("#next").addClass("disabled");
+            $("#next").addClass("disabled");
         }
         if ($("#prevVal").val() === '0') {
-                $("#prev").addClass("disabled");
-
+            $("#prev").addClass("disabled");
         }
     });
 </script>

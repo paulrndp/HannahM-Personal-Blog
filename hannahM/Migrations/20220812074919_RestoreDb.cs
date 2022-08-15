@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace hannahM.Migrations
 {
     /// <inheritdoc />
-    public partial class AddToDb : Migration
+    public partial class RestoreDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -30,23 +30,6 @@ namespace hannahM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Blog",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Views = table.Column<int>(type: "int", nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Blog", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Chapter",
                 columns: table => new
                 {
@@ -64,20 +47,21 @@ namespace hannahM.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Random",
+                name: "Post",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Category = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Views = table.Column<int>(type: "int", nullable: true),
                     CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Random", x => x.Id);
+                    table.PrimaryKey("PK_Post", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -98,6 +82,21 @@ namespace hannahM.Migrations
                 {
                     table.PrimaryKey("PK_Stories", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "Visitor",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    postId = table.Column<int>(type: "int", nullable: false),
+                    Point = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    visitorIp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Visitor", x => x.Id);
+                });
         }
 
         /// <inheritdoc />
@@ -107,16 +106,16 @@ namespace hannahM.Migrations
                 name: "Accounts");
 
             migrationBuilder.DropTable(
-                name: "Blog");
-
-            migrationBuilder.DropTable(
                 name: "Chapter");
 
             migrationBuilder.DropTable(
-                name: "Random");
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "Stories");
+
+            migrationBuilder.DropTable(
+                name: "Visitor");
         }
     }
 }

@@ -1,14 +1,12 @@
 ﻿@model ContentsList
 @using System.Web;
 @using System.Text.RegularExpressions;
-
 @{
 
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
 <link rel="stylesheet" href="~/main/css/postcards.css">
-
 <body>
     <div class="container">
         <div class="row">
@@ -33,20 +31,11 @@
             </div>
             <div class="col-lg-4">
                 <h5 class="underline">Recently Posts</h5>
-                @foreach (var item in Model.blogs.Take(6).Reverse())
+                @foreach (var item in Model.post)
                 {
                     <div class="card-transparent">
                         <div class="card-body">
                             <h6 class="card-title hover-underline-animation"><a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h6>
-                            <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
-                        </div>
-                    </div>
-                }
-                @foreach (var item in Model.random.Take(6).Reverse())
-                {
-                    <div class="card-transparent">
-                        <div class="card-body">
-                            <h6 class="card-title hover-underline-animation"><a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h6>
                             <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
                         </div>
                     </div>

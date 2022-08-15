@@ -12,8 +12,8 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220809115943_AddToDb")]
-    partial class AddToDb
+    [Migration("20220812074919_RestoreDb")]
+    partial class RestoreDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -59,36 +59,6 @@ namespace hannahM.Migrations
                     b.ToTable("Accounts");
                 });
 
-            modelBuilder.Entity("hannahM.Models.Blog", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Status")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("Views")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Blog");
-                });
-
             modelBuilder.Entity("hannahM.Models.Chapters", b =>
                 {
                     b.Property<int>("Id")
@@ -118,7 +88,7 @@ namespace hannahM.Migrations
                     b.ToTable("Chapter");
                 });
 
-            modelBuilder.Entity("hannahM.Models.RandomThoughts", b =>
+            modelBuilder.Entity("hannahM.Models.Posts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -126,8 +96,10 @@ namespace hannahM.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Content")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedDateTime")
@@ -137,7 +109,6 @@ namespace hannahM.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int?>("Views")
@@ -145,7 +116,7 @@ namespace hannahM.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Random");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("hannahM.Models.Story", b =>
@@ -182,6 +153,28 @@ namespace hannahM.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Stories");
+                });
+
+            modelBuilder.Entity("hannahM.Models.Visitor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Point")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("postId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("visitorIp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Visitor");
                 });
 #pragma warning restore 612, 618
         }

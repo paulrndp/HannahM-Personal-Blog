@@ -2,47 +2,59 @@
 using hannahM.Models;
 using hannahM.Action;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
-    public class NewController : Controller
+    public class PostsController : Controller
     {
         private readonly ApplicationDbContext _db;
 
-        public NewController(ApplicationDbContext db)
+
+        public PostsController(ApplicationDbContext db)
         {
             _db = db;
         }
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string show)
         {
+            if (show == "All")
+            {
+                ViewBag.all = "active";
+                var status = _db.Post.OrderByDescending(x => x.Id).ToList();
+                return View("Index", status);
+            }
+            else if (show == "Blog")
+            {
+                ViewBag.blog = "active";
+                var status = _db.Post.Where(x => x.Category == "Blog").Select(x => x).ToList();
+                return View("Index", status);
+            }            
+            else if (show == "Random")
+            {
+                ViewBag.random = "active";
+                var status = _db.Post.Where(x => x.Category == "Random").Select(x => x).ToList();
+                return View("Index", status);
+            }
             return View();
         }
         [HttpGet]
-        public IActionResult BlogPost()
+        public IActionResult Edit(int? id)
         {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult RandomPost()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult StoryPost()
-        {
-            return View();
-        }
-        [HttpGet]
-        public IActionResult Post()
-        {
-            return View();
+            if (id == null || id == 0)
+            {
+                return NotFound();
+            }
+            var found = _db.Post.Find(id);
+            if (found == null)
+            {
+                return NotFound();
+            }
+            return View(found);
+
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Post(Posts obj, string submit, string blog, string random)
+        public IActionResult Edit(Posts obj, string submit, string blog, string random)
         {
             if (blog == "Blog" && random == null)
             {
@@ -51,21 +63,21 @@ namespace hannahM.Controllers
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "draft";
-                    p.Category = "Blog";
-                    _db.Post.Add(p);
+                    obj.Status = "draft";
+                    obj.Category = "Blog";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as draft post.";
-                    return RedirectToAction("Index", "Posts", new { show = "All"});
+                    return RedirectToAction("Index", "Posts", new { show = "All" });
                 }
                 else if (submit == "Published")
                 {
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "published";
-                    p.Category = "Blog";
-                    _db.Post.Add(p);
+                    obj.Status = "published";
+                    obj.Category = "Blog";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as published post.";
                     return RedirectToAction("Index", "Posts", new { show = "All" });
@@ -80,9 +92,9 @@ namespace hannahM.Controllers
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "draft";
-                    p.Category = "Random";
-                    _db.Post.Add(p);
+                    obj.Status = "draft";
+                    obj.Category = "Random";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as draft post.";
                     return RedirectToAction("Index", "Posts", new { show = "All" });
@@ -94,9 +106,9 @@ namespace hannahM.Controllers
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "published";
-                    p.Category = "Random";
-                    _db.Post.Add(p);
+                    obj.Status = "published";
+                    obj.Category = "Random";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as published post.";
                     return RedirectToAction("Index", "Posts", new { show = "All" });
@@ -112,9 +124,9 @@ namespace hannahM.Controllers
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "draft";
-                    p.Category = "Both";
-                    _db.Post.Add(p);
+                    obj.Status = "draft";
+                    obj.Category = "Both";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as draft post.";
                     return RedirectToAction("Index", "Posts", new { show = "All" });
@@ -126,9 +138,9 @@ namespace hannahM.Controllers
                     Posts p = new Posts();
                     p.Title = obj.Title;
                     p.Content = obj.Content;
-                    p.Status = "published";
-                    p.Category = "Both";
-                    _db.Post.Add(p);
+                    obj.Status = "published";
+                    obj.Category = "Both";
+                    _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as published post.";
                     return RedirectToAction("Index", "Posts", new { show = "All" });
@@ -137,44 +149,19 @@ namespace hannahM.Controllers
             }
 
             return View(obj);
-        }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> StoryPost(Story s, List<IFormFile> Cover)
+        }
+        public IActionResult postDelete(int? id)
         {
-            if (ModelState.IsValid)
+            var found = _db.Post.Find(id);
+            if (found == null)
             {
-                Story story = new Story();
-                story.Title = s.Title;
-                story.Desc = s.Desc;
-                story.Tags = s.Tags;
-                story.Genre = s.Genre;
-
-                foreach (var item in Cover)
-                {
-                    if (item.Length > 0)
-                    {
-                        using (var stream = new MemoryStream())
-                        {
-                            await item.CopyToAsync(stream);
-                            story.Cover = stream.ToArray();
-                        }
-                    }
-                }
-                _db.Stories.Add(story);
-                _db.SaveChanges();
-                TempData["success"] = "New story added.";
-
+                return NotFound();
             }
-            else
-            {
-                TempData["error"] = "There was an error submitting this form.";
-                return RedirectToAction("StoryPost", s);
-            }
-            return RedirectToAction("MyStory", "Story");
-
+            _db.Post.Remove(found);
+            _db.SaveChanges();
+            TempData["success"] = "Post successfully deleted.";
+            return RedirectToAction("Index", new { show = "All" });
         }
-
     }
 }

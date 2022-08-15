@@ -6,8 +6,7 @@ namespace hannahM.Models
     {
         public List<Story> stories { get; set; }
         public List<Chapters> chapters { get; set; }
-        public List<Blog> blogs { get; set; }
-        public List<RandomThoughts> random { get; set; }
+        public List<Posts> post { get; set; }
 
     }
 }

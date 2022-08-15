@@ -9,13 +9,11 @@ namespace hannahM.Data
         {
 
         }
-        public DbSet<Blog> Blog { get; set; }
-        public DbSet<RandomThoughts> Random { get; set; }
         public DbSet<Story> Stories { get; set; }
         public DbSet<Chapters> Chapter { get; set; }
         public DbSet<Account> Accounts { get; set; }
-
-
+        public DbSet<Posts> Post { get; set; }
+        public DbSet<Visitor> Visitor { get; set; }
 
     }
 }

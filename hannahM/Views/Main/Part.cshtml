@@ -53,20 +53,11 @@
                 </div>
                 <div class="col-lg-4">
                     <h6 class="underline">Recently Posts</h6>
-                    @foreach (var item in ViewBag.blg)
+                    @foreach (var item in ViewBag.post)
                     {
                         <div class="card-transparent">
                             <div class="card-body">
                                 <h6 class="card-title"><a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" >@item.Title</a></h6>
-                                <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
-                            </div>
-                        </div>
-                    }
-                    @foreach (var item in ViewBag.rndm)
-                    {
-                        <div class="card-transparent">
-                            <div class="card-body">
-                                <h6 class="card-title"><a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h6>
                                 <p class="card-text">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 50)), @"<[^>]+>", ""))...</p>
                             </div>
                         </div>

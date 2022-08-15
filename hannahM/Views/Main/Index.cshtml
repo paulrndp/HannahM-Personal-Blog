@@ -7,40 +7,39 @@
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
-<!-- CONTENT-->
+<input id="myIP" type="text" />
 
 <div class="container">
     <div class="row">
-        <div class="col-lg-6">
-            @foreach (var item in Model.blogs.Take(3))
+        <div class="col-lg-7">
+            @foreach (var item in Model.post)
             {
                 <div class="card" style="text-align:center;border:none;">
                     <div class="card-body">
-                        <h6 class="short">@ViewBag.Blog</h6>
-                        <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>
-                        <pre class="card-text text-muted">@item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
+                        @if (item.Category == "Blog")
+                        {
+                            <h6 class="short">@ViewBag.Blog</h6>
+
+                        }
+                        @if (item.Category == "Random")
+                        {
+                            <h6 class="short">@ViewBag.RandomThoughts</h6>
+
+                        }
+                        @if (item.Category == "Both")
+                        { 
+                            <h6 class="short">@ViewBag.All</h6>
+                        }
+                        <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>                        <pre class="card-text text-muted">@item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
                         <div><p class="text-muted" style="text-align: center;">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))... </p></div>
                         <a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font"> Read More</a>
                     </div>
                 </div>
                 <hr>
             }
-            @foreach (var item in Model.random.Take(3))
-            {
-                <div class="card" style="text-align:center;border:none;">
-                    <div class="card-body">
-                        <h6 class="short">@ViewBag.RandomThoughts</h6>
-                        <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>
-                        <pre class="card-text text-muted">@item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
-                        <div><p class="text-muted" style="text-align: center;">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))... </p></div>
-                        <a asp-controller="Main" asp-action="Random_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font"> Read More</a>
-                    </div>
-                </div>
-                <hr>
-            }
         </div>
         <div class="col-lg-5">
-            @foreach (var item in Model.stories.Take(6))
+            @foreach (var item in Model.stories)
             {
                 <div class="card mb-3 shadow-sm" style="border:none;">
                     <div class="row">
@@ -61,24 +60,32 @@
     </div>
 </div>
 
-<section id="portfolio" hidden>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12 col-lg-8">
-                <h2 class="underline text-uppercase">Portfolio</h2>
-                <p>Put your portfolio or gallery images here for example. Able an hope of body. Any nay shyness article matters own removal nothing his forming. Gay own additions education satisfied the perpetual. If he cause manor happy. Without farther she exposed saw man led. Along on happy could cease green oh</p>
-            </div>
-        </div>
-        <div class="row g-4">
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-1.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-1.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-2.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-2.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-3.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-3.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-4.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-4.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-5.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-5.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-6.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-6.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-7.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-7.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-8.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-8.jpg" alt="image"></a></div>
-            <div class="col-md-4"><a class="glightbox d-block" href="img/portfolio-9.jpg" data-gallery="gallery" data-glightbox="Gallery image NaN"><img class="img-fluid" src="~/main/img/portfolio-9.jpg" alt="image"></a></div>
-        </div>
-    </div>
-</section>
+<script>
+    $(document).ready(function() {
+
+        var Sys = {};
+        var ua = navigator.userAgent.toLowerCase();
+        var s;
+        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
+            (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
+                (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
+                    (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
+                        (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
+
+        if (Sys.ie) {
+            $("#myIP").val(Sys.ie);
+        }
+        if (Sys.firefox) {
+            $("#myIP").val(Sys.firefox); 
+        }
+        if (Sys.chrome) {
+            $("#myIP").val(Sys.chrome);
+        }
+        if (Sys.opera) {
+            $("#myIP").val(Sys.opera);
+        }
+        if (Sys.safari) {
+            $("#myIP").val(Sys.safari);
+        }
+    });
+</script>

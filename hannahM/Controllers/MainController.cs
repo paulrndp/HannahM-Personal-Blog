@@ -1,17 +1,16 @@
 ﻿using hannahM.Data;
 using hannahM.Models;
 using Microsoft.AspNetCore.Mvc;
-
-
+using System.Net;
+using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Http;
 
 namespace hannahM.Controllers
 {
-
     public class MainController : Controller
     {
 
         private readonly ApplicationDbContext _db;
-
 
         public MainController(ApplicationDbContext db)
         {
@@ -23,13 +22,14 @@ namespace hannahM.Controllers
         }
         public IActionResult Index()
         {
+
             ViewBag.Blog = "Blog";
             ViewBag.Stories = "Stories";
             ViewBag.RandomThoughts = "Random Thoughts";
+            ViewBag.All = "Blog | Random Thoughts";
 
             ContentsList allcontents = new ContentsList();
-            allcontents.blogs = _db.Blog.ToList();
-            allcontents.random = _db.Random.ToList();
+            allcontents.post = _db.Post.ToList();
             allcontents.stories = _db.Stories.ToList();
             allcontents.chapters = _db.Chapter.ToList();
 
@@ -38,8 +38,7 @@ namespace hannahM.Controllers
         public IActionResult Story()
         {
             ContentsList allcontents = new ContentsList();
-            allcontents.blogs = _db.Blog.ToList();
-            allcontents.random = _db.Random.ToList();
+            allcontents.post = _db.Post.ToList();
             allcontents.stories = _db.Stories.ToList();
             allcontents.chapters = _db.Chapter.ToList();
             return View(allcontents);
@@ -47,14 +46,20 @@ namespace hannahM.Controllers
         }
         public IActionResult Blog()
         {
-
             ViewBag.Blog = "Blog";
-            var result = _db.Blog.Select(all => all).ToList();
+            var result = _db.Post.Where(x => x.Category == "Blog" || x.Category == "Both").Select(all => all).ToList();
             return View("Blog", result);
         }
-        public IActionResult Blog_post_read(int? id)
+        public IActionResult Blog_post_read(int id)
         {
-            var next = (from a in _db.Blog
+            var visit = Request.Cookies["visits"];
+            int visits = 0;
+            int.TryParse(visit, out visits);
+            visits++;
+            ViewBag.test = visits;
+
+
+            var next = (from a in _db.Post
                         where a.Id > id
                         orderby a.Id
                         select a.Id).FirstOrDefault();
@@ -62,40 +67,21 @@ namespace hannahM.Controllers
             ViewBag.Next = next;
             ViewBag.Prev = id - 1;
 
-
-            var result = _db.Blog.Where(x => x.Id == id).Select(all => all).ToList();
+            var result = _db.Post.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Blog_post_read", result);
-
         }
-
-        public IActionResult Random_post_read(int? id)
-        {
-            var next = (from a in _db.Random
-                        where a.Id > id
-                        orderby a.Id
-                        select a.Id).FirstOrDefault();
-
-            ViewBag.Next = next;
-            ViewBag.Prev = id - 1;
-
-            var result = _db.Random.Where(x => x.Id == id).Select(all => all).ToList();
-            return View("Random_post_read", result);
-        }
-
         public IActionResult Random()
         {
             ViewBag.RandomThoughts = "Random Thoughts";
-            var result = _db.Random.Select(all => all).ToList();
+            var result = _db.Post.Where(x => x.Category == "Random" || x.Category == "Both").Select(all => all).ToList();
             return View("Random", result);
         }
 
         public IActionResult Part(int? id)
         {
 
-            List<Blog> blogList = _db.Blog.ToList();
-            List<RandomThoughts> randomList = _db.Random.ToList();
-            ViewBag.rndm = randomList.OrderByDescending(x => x.Id).ToList();
-            ViewBag.blg = blogList.OrderByDescending(x => x.Id).ToList();
+            List<Posts> postList = _db.Post.ToList();
+            ViewBag.post = postList.OrderByDescending(x => x.Id).ToList();
 
             ViewBag.count = (from c in _db.Chapter
                              where c.story_id == id
@@ -117,8 +103,8 @@ namespace hannahM.Controllers
 
             ViewBag.min = (from c in _db.Chapter
                            where c.story_id == Convert.ToInt32(storyID)
-                           select c).Min(c => c.Id);            
-            
+                           select c).Min(c => c.Id);
+
             ViewBag.max = (from c in _db.Chapter
                            where c.story_id == Convert.ToInt32(storyID)
                            select c).Max(c => c.Id);
@@ -144,11 +130,12 @@ namespace hannahM.Controllers
             if (user != null)
             {
                 HttpContext.Session.SetString("Id", accnt.Id.ToString());
-                HttpContext.Session.SetString("Username", accnt.Username.ToString());
+                HttpContext.Session.SetString("Username", accnt.Username!.ToString());
                 return RedirectToAction("Index", "Admin");
             }
             return View();
 
         }
+
     }
 }

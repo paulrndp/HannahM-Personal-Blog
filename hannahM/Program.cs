@@ -36,6 +36,8 @@ app.UseSession();
 
 app.UseAuthorization();
 
+app.UseDeveloperExceptionPage();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Main}/{action=Index}/{id?}/{slug?}");
