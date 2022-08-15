@@ -1,14 +1,12 @@
 ﻿@model ContentsList
 @using System.Web;
 @using System.Text.RegularExpressions;
-
+@using hannahM;
 @{
 
     Layout = "~/Views/Shared/_Main.cshtml";
 
 }
-<input id="myIP" type="text" />
-
 <div class="container">
     <div class="row">
         <div class="col-lg-7">
@@ -27,7 +25,7 @@
 
                         }
                         @if (item.Category == "Both")
-                        { 
+                        {
                             <h6 class="short">@ViewBag.All</h6>
                         }
                         <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>                        <pre class="card-text text-muted">@item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
@@ -59,33 +57,3 @@
         </div>
     </div>
 </div>
-
-<script>
-    $(document).ready(function() {
-
-        var Sys = {};
-        var ua = navigator.userAgent.toLowerCase();
-        var s;
-        (s = ua.match(/msie ([\d.]+)/)) ? Sys.ie = s[1] :
-            (s = ua.match(/firefox\/([\d.]+)/)) ? Sys.firefox = s[1] :
-                (s = ua.match(/chrome\/([\d.]+)/)) ? Sys.chrome = s[1] :
-                    (s = ua.match(/opera.([\d.]+)/)) ? Sys.opera = s[1] :
-                        (s = ua.match(/version\/([\d.]+).*safari/)) ? Sys.safari = s[1] : 0;
-
-        if (Sys.ie) {
-            $("#myIP").val(Sys.ie);
-        }
-        if (Sys.firefox) {
-            $("#myIP").val(Sys.firefox); 
-        }
-        if (Sys.chrome) {
-            $("#myIP").val(Sys.chrome);
-        }
-        if (Sys.opera) {
-            $("#myIP").val(Sys.opera);
-        }
-        if (Sys.safari) {
-            $("#myIP").val(Sys.safari);
-        }
-    });
-</script>

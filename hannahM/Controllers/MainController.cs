@@ -1,9 +1,7 @@
 ﻿using hannahM.Data;
 using hannahM.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Http;
+using hannahM.Action;
 
 namespace hannahM.Controllers
 {
@@ -11,10 +9,12 @@ namespace hannahM.Controllers
     {
 
         private readonly ApplicationDbContext _db;
+        static string mainIP = "";
 
         public MainController(ApplicationDbContext db)
         {
             _db = db;
+
         }
         public IActionResult Login()
         {
@@ -22,6 +22,9 @@ namespace hannahM.Controllers
         }
         public IActionResult Index()
         {
+            
+            using (var wc = new System.Net.WebClient())
+                mainIP = wc.DownloadString("https://checkip.amazonaws.com/");
 
             ViewBag.Blog = "Blog";
             ViewBag.Stories = "Stories";
@@ -32,7 +35,7 @@ namespace hannahM.Controllers
             allcontents.post = _db.Post.ToList();
             allcontents.stories = _db.Stories.ToList();
             allcontents.chapters = _db.Chapter.ToList();
-
+            ViewBag.text = mainIP;
             return View(allcontents);
         }
         public IActionResult Story()
@@ -52,12 +55,9 @@ namespace hannahM.Controllers
         }
         public IActionResult Blog_post_read(int id)
         {
-            var visit = Request.Cookies["visits"];
-            int visits = 0;
-            int.TryParse(visit, out visits);
-            visits++;
-            ViewBag.test = visits;
+            var getCategory = _db.Post.Where(x => x.Id == id).Select(x => x.Category).FirstOrDefault();
 
+            VisitorCounterClass.AddVisitor(id, getCategory, mainIP, _db);
 
             var next = (from a in _db.Post
                         where a.Id > id
@@ -66,6 +66,10 @@ namespace hannahM.Controllers
 
             ViewBag.Next = next;
             ViewBag.Prev = id - 1;
+
+            ViewBag.count = (from c in _db.Visitor
+                             where c.postId == id && c.visitorIp == mainIP && c.Point == getCategory
+                             select c).Count();
 
             var result = _db.Post.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Blog_post_read", result);
@@ -96,10 +100,16 @@ namespace hannahM.Controllers
 
         }
 
-        public IActionResult Read(int? id)
+        public IActionResult Read(int id)
         {
+            VisitorCounterClass.AddVisitor(id, "Story", mainIP, _db);
+
             var storyID = _db.Chapter.Where(x => x.Id == id).Select(stats => stats.story_id).Single();
             ViewBag.title = _db.Stories.Where(x => x.Id == Convert.ToInt32(storyID)).Select(stats => stats.Title).Single();
+
+            ViewBag.count = (from c in _db.Visitor
+                             where c.visitorIp == mainIP && c.postId == id && c.Point == "Story"
+                             select c).Count();
 
             ViewBag.min = (from c in _db.Chapter
                            where c.story_id == Convert.ToInt32(storyID)

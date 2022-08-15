@@ -1,5 +1,7 @@
 using hannahM.Data;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,7 @@ builder.Services.AddSession();
 builder.Services.Configure<RouteOptions>(options =>
 {
     options.LowercaseUrls = true;
+
 });
 
 var app = builder.Build();
@@ -28,6 +31,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+
+
 app.UseStaticFiles();
 
 app.UseRouting();
@@ -37,6 +42,8 @@ app.UseSession();
 app.UseAuthorization();
 
 app.UseDeveloperExceptionPage();
+
+
 
 app.MapControllerRoute(
     name: "default",
