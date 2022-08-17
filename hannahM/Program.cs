@@ -47,7 +47,7 @@ app.UseDeveloperExceptionPage();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Main}/{action=Index}/{id?}/{slug?}");
+    pattern: "{controller=Main}/{action=Index}/{id?}/{slug?}/");
 //    pattern: "{controller=Main}/{action=Index}/{id?}");
 
 app.Run();

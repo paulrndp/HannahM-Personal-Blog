@@ -12,10 +12,10 @@ namespace hannahM.Models
         [Required]
         public string? Title { get; set; }
         public string? Content { get; set; }
+        public int? Views { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public string? temp { get; set; }
         public string? Slug =>
          Title?.Replace(" ", "-").ToLower();
     }   

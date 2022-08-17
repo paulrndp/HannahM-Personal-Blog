@@ -28,7 +28,10 @@
                         {
                             <h6 class="short">@ViewBag.All</h6>
                         }
-                        <h5 class="card-title"><a class="hover-underline-animation" asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>                        <pre class="card-text text-muted">@item.CreatedDateTime.ToString("MMMM dd, yyyy") </pre>
+                        <h5 class="card-title"><a data-id="@item.Id" class="hover-underline-animation selected" asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h5>                        
+
+                        <pre class="card-text text-muted"><i class="bi bi-calendar"></i> @item.CreatedDateTime.ToString("MMMM dd, yyyy") <i class="bi bi-eye"></i> Views : @item.Views</pre>
+
                         <div><p class="text-muted" style="text-align: center;">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))... </p></div>
                         <a asp-controller="Main" asp-action="Blog_post_read" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font"> Read More</a>
                     </div>
@@ -57,3 +60,14 @@
         </div>
     </div>
 </div>
+@*<script>
+    $(document).ready(function() {
+        $(".selected").each(function(index) {
+            $(this).on("click", function() {
+                var id = $(this).data('id');
+                window.location.href = '@Url.ActionLink("addVisitor", "Main")/' + id;
+            });
+        });
+
+    });
+</script>*@

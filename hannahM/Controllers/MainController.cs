@@ -2,6 +2,7 @@
 using hannahM.Models;
 using Microsoft.AspNetCore.Mvc;
 using hannahM.Action;
+using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
@@ -22,9 +23,9 @@ namespace hannahM.Controllers
         }
         public IActionResult Index()
         {
-            
             using (var wc = new System.Net.WebClient())
                 mainIP = wc.DownloadString("https://checkip.amazonaws.com/");
+
 
             ViewBag.Blog = "Blog";
             ViewBag.Stories = "Stories";
@@ -32,10 +33,12 @@ namespace hannahM.Controllers
             ViewBag.All = "Blog | Random Thoughts";
 
             ContentsList allcontents = new ContentsList();
-            allcontents.post = _db.Post.ToList();
+
+            allcontents.post = _db.Post.Where(x => x.Status == "published").Select(all => all).ToList();
             allcontents.stories = _db.Stories.ToList();
-            allcontents.chapters = _db.Chapter.ToList();
+            
             ViewBag.text = mainIP;
+
             return View(allcontents);
         }
         public IActionResult Story()
@@ -43,7 +46,6 @@ namespace hannahM.Controllers
             ContentsList allcontents = new ContentsList();
             allcontents.post = _db.Post.ToList();
             allcontents.stories = _db.Stories.ToList();
-            allcontents.chapters = _db.Chapter.ToList();
             return View(allcontents);
 
         }
@@ -59,6 +61,19 @@ namespace hannahM.Controllers
 
             VisitorCounterClass.AddVisitor(id, getCategory, mainIP, _db);
 
+            var count = (from c in _db.Visitor
+                         where c.postId == id && c.Point == getCategory
+                         select c).Count();
+
+            var entityToUpdate = _db.Post.FirstOrDefault(x => x.Id == id);
+
+            if (entityToUpdate != null)
+            {
+                entityToUpdate.Views = count;
+                _db.Post.Update(entityToUpdate);
+                _db.SaveChanges();
+            }
+
             var next = (from a in _db.Post
                         where a.Id > id
                         orderby a.Id
@@ -66,10 +81,6 @@ namespace hannahM.Controllers
 
             ViewBag.Next = next;
             ViewBag.Prev = id - 1;
-
-            ViewBag.count = (from c in _db.Visitor
-                             where c.postId == id && c.visitorIp == mainIP && c.Point == getCategory
-                             select c).Count();
 
             var result = _db.Post.Where(x => x.Id == id).Select(all => all).ToList();
             return View("Blog_post_read", result);
@@ -83,13 +94,19 @@ namespace hannahM.Controllers
 
         public IActionResult Part(int? id)
         {
+            var count = _db.Chapter.Where(x => x.story_id == id).Select(x => x.Views).DefaultIfEmpty().Sum();
+
+            var entityToUpdate = _db.Stories.FirstOrDefault(x => x.Id == id);
+
+            if (entityToUpdate != null)
+            {
+                entityToUpdate.Views = count;
+                _db.Stories.Update(entityToUpdate);
+                _db.SaveChanges();
+            }
 
             List<Posts> postList = _db.Post.ToList();
             ViewBag.post = postList.OrderByDescending(x => x.Id).ToList();
-
-            ViewBag.count = (from c in _db.Chapter
-                             where c.story_id == id
-                             select c).Count();
 
             var query = from s in _db.Stories
                         join c in _db.Chapter on s.Id equals c.story_id into x
@@ -99,17 +116,26 @@ namespace hannahM.Controllers
             return View(query);
 
         }
-
         public IActionResult Read(int id)
         {
             VisitorCounterClass.AddVisitor(id, "Story", mainIP, _db);
 
+            var count = (from c in _db.Visitor
+                         where c.postId == id && c.visitorIp == mainIP && c.Point == "Story"
+                         select c).Count();
+
+
+            var entityToUpdate = _db.Chapter.FirstOrDefault(x => x.Id == id);
+
+            if (entityToUpdate != null)
+            {
+                entityToUpdate.Views = count;
+                _db.Chapter.Update(entityToUpdate);
+                _db.SaveChanges();
+            }
+
             var storyID = _db.Chapter.Where(x => x.Id == id).Select(stats => stats.story_id).Single();
             ViewBag.title = _db.Stories.Where(x => x.Id == Convert.ToInt32(storyID)).Select(stats => stats.Title).Single();
-
-            ViewBag.count = (from c in _db.Visitor
-                             where c.visitorIp == mainIP && c.postId == id && c.Point == "Story"
-                             select c).Count();
 
             ViewBag.min = (from c in _db.Chapter
                            where c.story_id == Convert.ToInt32(storyID)
@@ -146,6 +172,5 @@ namespace hannahM.Controllers
             return View();
 
         }
-
     }
 }

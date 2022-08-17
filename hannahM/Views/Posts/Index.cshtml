@@ -17,9 +17,7 @@
     </div>
     <div class="col-lg-3 col-5">
         <div class="btn-group btn-group-toggle mb-3 pullright" data-toggle="buttons">
-            <label class="btn btn-white disabled">
-                Show :
-            </label>
+
             <label class="all btn btn-white @ViewBag.all">
                 <input type="radio" name=""> All
             </label>
@@ -39,7 +37,7 @@
         <div class="col-lg-4">
             <div class="card card-small card-post mb-4">
                 <div class="card-body">
-                    <h5 class="card-title"><a asp-controller="Blog" asp-action="Edit" asp-route-id="@item.Id" class="text-fiord-blue">@item.Title</a> </h5>
+                    <h5 class="card-title"><a class="text-fiord-blue" href="@Url.ActionLink("Edit","Posts", new {@id = item.Id, @slug = item.Slug})">@item.Title</a> </h5>
                     <p class="card-text text-muted">@HttpUtility.HtmlDecode(Regex.Replace(item.Content.Substring(0, Math.Min(item.Content.Length, 250)), @"<[^>]+>", ""))...</p>
                 </div>
                 <div class="card-footer border-top d-flex">

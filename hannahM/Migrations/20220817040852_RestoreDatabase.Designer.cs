@@ -12,8 +12,8 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220812074919_RestoreDb")]
-    partial class RestoreDb
+    [Migration("20220817040852_RestoreDatabase")]
+    partial class RestoreDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -77,11 +77,11 @@ namespace hannahM.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("story_id")
+                    b.Property<int?>("Views")
                         .HasColumnType("int");
 
-                    b.Property<string>("temp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("story_id")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

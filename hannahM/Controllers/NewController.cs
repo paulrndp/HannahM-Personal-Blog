@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class NewController : Controller
     {
         private readonly ApplicationDbContext _db;

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace hannahM.Controllers
 {
+    [SessionExpire]
     public class PostsController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -28,7 +29,7 @@ namespace hannahM.Controllers
                 ViewBag.blog = "active";
                 var status = _db.Post.Where(x => x.Category == "Blog").Select(x => x).ToList();
                 return View("Index", status);
-            }            
+            }
             else if (show == "Random")
             {
                 ViewBag.random = "active";
@@ -65,6 +66,7 @@ namespace hannahM.Controllers
                     p.Content = obj.Content;
                     obj.Status = "draft";
                     obj.Category = "Blog";
+
                     _db.Post.Update(obj);
                     _db.SaveChanges();
                     TempData["success"] = "Successfully created as draft post.";

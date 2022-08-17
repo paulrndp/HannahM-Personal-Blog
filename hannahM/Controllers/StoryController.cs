@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class StoryController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -18,6 +18,9 @@ namespace hannahM.Controllers
         }
         public IActionResult Edit(int? id)
         {
+            ViewBag.totalReads = _db.Chapter.Where(x => x.story_id == id).Select(x => x.Views).DefaultIfEmpty().Sum();
+            ViewBag.totalChapters = _db.Chapter.Where(x => x.story_id == id).Select(x => x.story_id).Count();
+
             var status = _db.Stories.Where(x => x.Id == id).Select(stats => stats).Single();
             return View("Edit", status);
         }
@@ -74,6 +77,8 @@ namespace hannahM.Controllers
                     _db.Entry(obj).Property("Tags").IsModified = true;
                     _db.Entry(obj).Property("Genre").IsModified = true;
                     _db.Entry(obj).Property("Cover").IsModified = false;
+                    _db.Entry(obj).Property("Views").IsModified = false;
+                    _db.Entry(obj).Property("TotalChapters").IsModified = false;
                     _db.SaveChanges();
                     TempData["success"] = "Successfully Updated! ";
                     return RedirectToAction("Edit");
@@ -96,6 +101,8 @@ namespace hannahM.Controllers
                     _db.Entry(obj).Property("Desc").IsModified = true;
                     _db.Entry(obj).Property("Tags").IsModified = true;
                     _db.Entry(obj).Property("Genre").IsModified = true;
+                    _db.Entry(obj).Property("Views").IsModified = false;
+                    _db.Entry(obj).Property("TotalChapters").IsModified = false;
                     foreach (var item in Cover)
                     {
                         if (item.Length > 0)
@@ -124,14 +131,25 @@ namespace hannahM.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult NewChapter(Chapters obj)
         {
+
             if (ModelState.IsValid)
             {
                 Chapters chptrs = new Chapters();
                 chptrs.Title = obj.Title;
                 chptrs.Content = obj.Content;
                 chptrs.story_id = obj.story_id;
+
                 _db.Chapter.Add(chptrs);
                 _db.SaveChanges();
+                var count = _db.Chapter.Where(x => x.story_id == obj.story_id).Select(x => x.story_id).DefaultIfEmpty().Count();
+                var entityToUpdate = _db.Stories.FirstOrDefault(x => x.Id == obj.story_id);
+
+                if (entityToUpdate != null)
+                {
+                    entityToUpdate.TotalChapters = count;
+                    _db.Stories.Update(entityToUpdate);
+                    _db.SaveChanges();
+                }
                 TempData["success"] = "New Chapter Added.";
                 return RedirectToAction("Chapters", new { id = obj.Id });
             }
@@ -151,6 +169,7 @@ namespace hannahM.Controllers
                 _db.Entry(obj).Property("Title").IsModified = true;
                 _db.Entry(obj).Property("Content").IsModified = true;
                 _db.Entry(obj).Property("story_id").IsModified = false;
+                _db.Entry(obj).Property("Views").IsModified = true;
                 _db.Entry(obj).Property("CreatedDateTime").IsModified = false; ;
                 _db.SaveChanges();
                 TempData["success"] = "'" + obj.Title + "'" + " Successfully Updated! ";

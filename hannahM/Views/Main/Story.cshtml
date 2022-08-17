@@ -20,8 +20,8 @@
                         <div class="blog-post_info">
                             <h1 class="blog-post_title hover-underline-animation"><a asp-controller="Main" asp-action="Part" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@item.Title</a></h1>
                             <div class="row">
-                                <div class="col-2"><i class="bi bi-eye"> 1,856</i></div>
-                                <div class="col-2"><i class="bi bi-list-ul"> 25</i></div>
+                                <div class="col-3"><i class="bi bi-eye"></i> @item.Views Reads</div>
+                                <div class="col-3"><i class="bi bi-book"></i> @item.TotalChapters Chapters</div>
                             </div>
                             <p class="blog-post_text">@Html.Raw(item.Desc)</p>
                             <a asp-controller="Main" asp-action="Part" asp-route-id="@item.Id" asp-route-slug="@item.Slug" class="hover-underline-animation default-font"> Read More</a>

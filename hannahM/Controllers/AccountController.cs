@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class AccountController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -21,6 +21,7 @@ namespace hannahM.Controllers
         {
             var status = _db.Accounts.Where(x => x.Id == id).Select(stats => stats).First();
             return View("Index", status);
+   
         }
 
         [HttpPost]

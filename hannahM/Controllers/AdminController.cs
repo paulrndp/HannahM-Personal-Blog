@@ -6,7 +6,7 @@ using hannahM.Action;
 
 namespace hannahM.Controllers
 {
-    //[SessionExpire]
+    [SessionExpire]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _db;
@@ -19,15 +19,8 @@ namespace hannahM.Controllers
         {
             ViewBag.S = _db.Stories.Count();
             ViewBag.B = _db.Post.Where(x => x.Category == "Blog" || x.Category == "Both" && x.Status == "published").Count();
-
-            ViewBag.BDraft = _db.Post.Where(x => x.Category == "Blog" && x.Status.Contains("draft") || x.Category.Contains("Both")).Count();
-
             ViewBag.R = _db.Post.Where(x => x.Category == "Random" && x.Status == "published").Count();
 
-
-            ViewBag.RDraft = _db.Post.Where(x => x.Category == "Random" && x.Status.Contains("draft") || x.Category.Contains("Both")).Count();
-
-            ViewBag.draft = _db.Post.Where(x => x.Status == "draft").Count();
         }
         public IActionResult Index()
         {

@@ -23,8 +23,8 @@
                             <div class="blog-post_info">
                                 <h1 class="blog-post_title">@item.stories.Title</h1>
                                 <div class="row">
-                                    <div class="col-2"><i class="bi bi-eye"> 1,856</i></div>
-                                    <div class="col-2"><i class="bi bi-list-ul"> @ViewBag.count</i></div>
+                                <div class="col-3"><i class="bi bi-eye"></i> @item.stories.Views Reads</div>
+                                <div class="col-3"><i class="bi bi-book"></i> @item.stories.TotalChapters Chapters</div>
                                 </div>
                                 <p class="blog-post_text">
                                     @Html.Raw(item.stories.Desc)
@@ -33,7 +33,6 @@
                             </div>
                         </div>
                     }
-
                 </div>
                 <div class="col-lg-8">
                     <h4 class="underline">Table of Contents</h4>
@@ -45,7 +44,7 @@
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
                                     <a asp-controller="Main" asp-action="Read" asp-route-id="@item.chapters?.Id" asp-route-slug="@item.stories?.Slug" class="hover-underline-animation default-font"> @item.chapters?.Title</a>
-                                    <span class=""><i class="bi bi-eye"> 1,856</i></span>
+                                    <span class=""><i class="bi bi-eye"> @item.chapters.Views</i></span>
                                 </li>
                             }
                         </ul>

@@ -15,8 +15,9 @@ namespace hannahM.Models
         public string? Tags { get; set; }
         public string? Genre { get; set; }
         public byte[]? Cover { get; set; }
+        public int? Views { get; set; }
+        public int? TotalChapters { get; set; }
         public DateTime CreatedDateTime { get; set; } = DateTime.Now;
-        public string? temp { get; set; }
         public string? Slug =>
             Title?.Replace(" ","-").ToLower();
     }   

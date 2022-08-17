@@ -17,7 +17,7 @@
     @foreach (var item in Model)
     {
         <div class="col-lg-6 col-sm-12 mb-3">
-            <div class="card card-small card-post card-post--aside card-post--1 h-100">
+            <div class="card card-small card-post card-post--aside card-post--1" style="height:350px;">
                 @if (item.Cover != null && !String.IsNullOrEmpty(Convert.ToBase64String(item.Cover)))
                 {
                     <div class="card-post__image" style="background-image: url('data:image/jpg;base64,@Convert.ToBase64String(item.Cover)');"></div>
@@ -33,39 +33,10 @@
                         <a class="text-fiord-blue" asp-controller="Story" asp-action="Edit" asp-route-id="@item.Id" asp-route-slug="@item.Slug">@Html.DisplayFor(x => item.Title)</a>
                     </h5>
                     <div class="d-flex mb-3">
-                        <small class="text-muted"><i class="fas fa-list mr-1"></i></small>&ensp;
-                        <small class="text-muted"><i class="fas fa-eye mr-1">&nbsp;</i>1,234 Reads</small>&ensp;
+                        <small class="text-muted"><i class="fas fa-book mr-1"></i>@item.TotalChapters Chapters</small>&ensp;
+                        <small class="text-muted"><i class="fas fa-eye mr-1">&nbsp;</i>@item.Views Reads</small>&ensp;
                     </div>
                     <p class="card-text text-muted">@Html.Raw(item.Desc.Substring(0, Math.Min(item.Desc.Length, 250)))...</p>
-                    <div class="d-flex">
-                        <div class="">
-                            <ul class="navbar-nav flex-row ">
-                                <li class="nav-item dropdown notifications">
-                                    <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <div class="nav-link-icon__wrapper">
-                                            <i class="material-icons">settings</i>
-                                        </div>
-                                    </a>
-                                    <div class="dropdown-menu dropdown-menu-small" aria-labelledby="dropdownMenuLink">
-                                        <a class="dropdown-item" asp-controller="Story" asp-action="Chapters" asp-route-id="@item.Id" asp-route-slug="@item.Slug">
-                                            <div class="notification__icon-wrapper">
-                                                <div class="notification__icon">
-                                                    <i class="material-icons">list</i>
-                                                </div>
-                                            </div>
-                                            <div class="notification__content">
-                                                <span class="notification__category text-primary">Chapters</span>
-                                                <p>
-                                                    Add, Edit, Delete Chapter
-                                                </p>
-                                            </div>
-                                        </a>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-
                 </div>
             </div>
         </div>

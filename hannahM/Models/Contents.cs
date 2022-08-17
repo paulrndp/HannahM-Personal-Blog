@@ -6,6 +6,7 @@ namespace hannahM.Models
     {
         public Story stories { get; set; }
         public Chapters chapters { get; set; }
+        public Posts post { get; set; }
 
     }
 }

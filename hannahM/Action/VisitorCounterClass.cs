@@ -8,7 +8,7 @@ namespace hannahM.Action
         public static void AddVisitor(int id, string? category, string mainIP, ApplicationDbContext _db)
         {
             var getCurrentIp = _db.Visitor.Where(x => x.postId == id && x.Point == category).Select(all => all.visitorIp).FirstOrDefault();
-
+            //120.29.86.100 != 120.29.86.100
             if (getCurrentIp != mainIP)
             {
                 Visitor v = new Visitor();
