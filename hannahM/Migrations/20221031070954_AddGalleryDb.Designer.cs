@@ -12,8 +12,8 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220817040852_RestoreDatabase")]
-    partial class RestoreDatabase
+    [Migration("20221031070954_AddGalleryDb")]
+    partial class AddGalleryDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -88,6 +88,25 @@ namespace hannahM.Migrations
                     b.ToTable("Chapter");
                 });
 
+            modelBuilder.Entity("hannahM.Models.Gallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Images")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Galleries");
+                });
+
             modelBuilder.Entity("hannahM.Models.Posts", b =>
                 {
                     b.Property<int>("Id")
@@ -147,8 +166,11 @@ namespace hannahM.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("temp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("TotalChapters")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Views")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

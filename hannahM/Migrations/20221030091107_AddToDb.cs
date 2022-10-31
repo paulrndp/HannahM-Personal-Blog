@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace hannahM.Migrations
 {
     /// <inheritdoc />
-    public partial class RestoreDatabase : Migration
+    public partial class AddToDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -75,8 +75,9 @@ namespace hannahM.Migrations
                     Tags = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Cover = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    temp = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Views = table.Column<int>(type: "int", nullable: true),
+                    TotalChapters = table.Column<int>(type: "int", nullable: true),
+                    CreatedDateTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {

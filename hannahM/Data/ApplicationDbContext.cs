@@ -14,6 +14,7 @@ namespace hannahM.Data
         public DbSet<Account> Accounts { get; set; }
         public DbSet<Posts> Post { get; set; }
         public DbSet<Visitor> Visitor { get; set; }
+        public DbSet<Gallery> Galleries { get; set; }
 
     }
 }

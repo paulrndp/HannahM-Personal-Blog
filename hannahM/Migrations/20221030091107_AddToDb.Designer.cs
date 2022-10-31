@@ -12,8 +12,8 @@ using hannahM.Data;
 namespace hannahM.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220817064423_alterStoriesColumn-Views")]
-    partial class alterStoriesColumnViews
+    [Migration("20221030091107_AddToDb")]
+    partial class AddToDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -146,6 +146,9 @@ namespace hannahM.Migrations
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TotalChapters")
+                        .HasColumnType("int");
 
                     b.Property<int?>("Views")
                         .HasColumnType("int");

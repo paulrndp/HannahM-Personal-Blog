@@ -85,6 +85,25 @@ namespace hannahM.Migrations
                     b.ToTable("Chapter");
                 });
 
+            modelBuilder.Entity("hannahM.Models.Gallery", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Category")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Images")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Galleries");
+                });
+
             modelBuilder.Entity("hannahM.Models.Posts", b =>
                 {
                     b.Property<int>("Id")
